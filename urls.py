@@ -29,6 +29,17 @@ topic_patterns = [
     url('^new/(?P<forum_id>\d+)/$', views.new_post, name='lbforum_new_topic'),
 ]
 
+chat_patterns = [
+    url('^(?P<topic_id>\d+)/$', views.chat, name='lbforum_chat'),
+    url('^(?P<topic_id>\d+)/delete/$', views.delete_topic,
+        name='lbforum_delete_topic'),
+    url('^(?P<topic_id>\d+)/toggle_topic_attr/(?P<attr>[\w-]+)/$',
+        views.toggle_topic_attr,
+        name='lbforum_toggle_topic_attr'),
+    url('^new/$', views.new_post, name='lbforum_new_topic'),
+    url('^new/(?P<forum_id>\d+)/$', views.new_post, name='lbforum_new_topic'),
+]
+
 post_patterns = [
     url('^(?P<post_id>\d+)/$', views.post, name='lbforum_post'),
     url('^(?P<post_id>\d+)/edit/$', views.edit_post, name='lbforum_post_edit'),
@@ -58,6 +69,10 @@ urlpatterns = [
     url(r'^topic/', include(topic_patterns)),
     url(r'^profile/', include(profile_patterns)),
     url(r'^api/', include(router.urls)),
+    url(r'^chat/', include(chat_patterns)),
+
+    url('^reply/new/(?P<topic_id>\d+)/$', views.new_chat_post,
+        name='lbforum_new_replay'),
 
     url('^reply/new/(?P<topic_id>\d+)/$', views.new_post,
         name='lbforum_new_replay'),
