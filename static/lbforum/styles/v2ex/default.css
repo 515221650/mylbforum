@@ -9,12 +9,11 @@
 	The best way to wipe IE6 from this planet is to forget it all since the beginning of your every new project.
 */
 input.taginput{
-	width: fit-content;
+	width: fit-content !important;
 }
 label.taginput{
-	width: fit-content;
-	background-color: #c5e7ff;
-	color: #bcbcbc;
+	width: fit-content !important;
+	color: #636363;
 }
 .rate {
     float: left;
@@ -226,11 +225,12 @@ a.dark:hover {
 #Navigation ul li {
 	list-style: none;
 	float: left;
-	background-color: #35cfb5;
+	/*background-color: #35cfb5;*/
     padding: 33px;
     width: 90px;
     /* border-radius: 3px; */
-    text-align: center;
+	text-align: center;
+	padding-left: 0px;
 }
 
 #Navigation ul li a {
@@ -423,9 +423,13 @@ td.avatar_mini {
 .snow {
 	color: rgba(0, 0, 0, 0.15);
 	color: rgba(0, 0, 0, 0.55);
-    font-size: 20px;
+    /*font-size: 20px; */
     /* line-height: 40px; */
     margin: 20px;
+}
+
+.rating {
+    font-size: 20px;
 }
 
 .chevron {
@@ -1234,4 +1238,12 @@ a.fade:hover {
 
 #id_subject {
     width: 620px !important;
+}
+input.taginput{
+	width: fit-content !important;
+}
+label.taginput imp{
+	width: fit-content !important;
+	background-color: #c5e7ff;
+	color: #bcbcbc;
 }
