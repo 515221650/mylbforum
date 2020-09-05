@@ -39,7 +39,8 @@
             {% if not forum %}
               <strong><a class="node" href="{% url 'lbforum_forum' forum_slug=t.forum.slug %}">{{t.forum.name}}</a></strong> &bull;
             {% endif %}
-            <strong><a class="node2"  href="{% url 'lbforum_forum' forum_slug=t.forum.slug %}">{{t.topic_type.name}}</a></strong> &bull;
+
+            <strong><a class="node2"  style="background-color: #{{t.topic_type.color}}" href="{% url 'lbforum_forum' forum_slug=t.forum.slug %}">{{t.topic_type.name}}</a></strong> &bull;
             <strong><a class="dark" href="{% url 'lbforum_profile' user_id=t.posted_by.pk %}">{{t.posted_by.lbforum_profile}}</a></strong> &bull;
             {{ t.num_views }} {% trans "views" %} &bull;
             {% trans "Last post" %} {{ t.last_post.created_on |lbtimesince }} by

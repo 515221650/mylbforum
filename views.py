@@ -61,7 +61,6 @@ def index(request, template_name="lbforum/index.html"):
     topics = None
     user = request.user
     topics = get_all_topics(user)
-
     topics = topics.order_by('-last_reply_on')[:20]
     ctx['topics'] = topics
     return render(request, template_name, ctx)
@@ -239,11 +238,12 @@ def new_post(
             return HttpResponse(_("you can't reply, this topic closed."))
         forum = topic.forum
         first_post = topic.posts.order_by('created_on').first()
-    tag = "test"
+
     initial['forum'] = forum
 
     print("!!!!!!")
     if request.method == "POST":
+        tag = request.POST["tag"]
         form = form_class(
             request.POST, user=user, forum=forum,
             initial=initial,
