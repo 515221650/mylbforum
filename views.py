@@ -60,9 +60,16 @@ def index(request, template_name="lbforum/index.html"):
     ctx = {}
     topics = None
     user = request.user
+    profile = LBForumUserProfile.objects.get(id=user.id)
     topics = get_all_topics(user)
     topics = topics.order_by('-last_reply_on')[:20]
     ctx['topics'] = topics
+
+    chat_list = profile.get_chat_list()
+    chat_list = [{"user":User.objects.get(id=other_id),
+                  "last_sentence":Topic.objects.get(id=chat_list[other_id]).last_post.message}
+                 for other_id in chat_list.keys()]
+    ctx['chatlist'] = chat_list
     return render(request, template_name, ctx)
 
 
