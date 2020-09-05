@@ -116,9 +116,41 @@
             </span>
             <div class="sep10"></div>
             <div class="sep10"></div>
+             <div align="left">
+             <form>
+             {% csrf_token %}
+              <div class="rate">
+              <input type="radio" id="star5" name="rate" value="5" />
+              <label for="star5" title="text">5 stars</label>
+              <input type="radio" id="star4" name="rate" value="4" />
+              <label for="star4" title="text">4 stars</label>
+              <input type="radio" id="star3" name="rate" value="3" />
+              <label for="star3" title="text">3 stars</label>
+              <input type="radio" id="star2" name="rate" value="2" />
+              <label for="star2" title="text">2 stars</label>
+              <input type="radio" id="star1" name="rate" value="1" />
+              <label for="star1" title="text">1 star</label>
+              </div>
+              </form>
+              <span class="fa fa-star"></span>
+            </div>
+            <br>
+            <br><br><div align="left">
+              <div class="rate">
+              <label for="star5" title="text">5 stars</label>
+              <label for="star4" title="text">4 stars</label>
+              <label for="star3" title="text">3 stars</label>
+              <label for="star2" title="text">2 stars</label>
+              <label for="star1" title="text">1 star</label>
+              </div>
+            </div>
+<br>
+            <div class="sep20"></div>
+            <div class="sep20"></div>
             <div align="left">
               <a href="{% url 'lbforum_new_topic' forum_id=forum.pk %}" class="super normal button">{% trans "Post new topic" %}</a>
             </div>
+                       </div>
             <div class="sep5"></div>
             <div class="sep10"></div>
             <div>
@@ -129,7 +161,7 @@
                 <a href="{% forum_url forum "good" topic_type2 %}">{% trans "Distillate District" %}</a>
               </div>
             </div>
-          </td>
+                     </td>
         </tr>
       </table>
     </div>
