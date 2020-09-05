@@ -17,9 +17,14 @@
             <span class="fade">Lecture</span>
         </div>
        <div class="inner">
-           <a class="item_node" href=""><span>like</span></a>
-           <a class="item_node" href=""><span>taken</span></a>
-           <a class="item_node" href=""><span>not interested</span></a>
+            {% block content %}
+            <form action="" method="post">
+                {% csrf_tocken %}
+                <input type="submit" value="like" class="item_node" name="stat">
+                <input type="submit" value="taken" class="item_node" name="stat">
+                <input type="submit" value="not interested" class="item_node" name="stat">
+            </form>
+            {% endblock %}
        </div>
    </div>
    <div class="sep20"></div>
