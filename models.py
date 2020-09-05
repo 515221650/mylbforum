@@ -349,7 +349,7 @@ class LBForumUserProfile(models.Model):
 
     def add_chat(self, other, topic_id):
         chat_list = self.get_chat_list()
-        if topic_id not in chat_list.keys():
+        if other not in chat_list.keys():
             chat_list[other] = topic_id
         self.chatList = json.dumps(chat_list)
         self.save()
