@@ -30,11 +30,21 @@ def profile(request, user_id=None, template_name="lbforum/profile/profile.html")
         # print(request.POST.get("digit", ""))
         # my_id in "my_id"
         # user_id in "user_id"
+        my_id = request.POST.get("my_id", "")
+        # view_user_id = request.POST.get("user_id", "")
+        print("my_id", my_id)
+        print("user_id", user_id)
+        my_profile = LBForumUserProfile.objects.get(id=my_id)
+        print("friend ", my_profile.get_friend())
+        my_profile.add_friend(user_id)
+        print("friend ", my_profile.get_friend())
 
     view_only = view_user != request.user
     courses = get_class_by_user(view_user)
+    my_id = request.user.id
     print(len(courses))
-    ext_ctx = {'view_user': view_user, 'view_only': view_only, 'courses_len': len(courses)}
+    ext_ctx = {'view_user': view_user, 'view_only': view_only, 'courses_len': len(courses)
+    , 'my_id' : my_id, 'user_id' : user_id}
     return render(request, template_name, ext_ctx)
 
 @login_required

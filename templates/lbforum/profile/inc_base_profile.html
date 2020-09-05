@@ -48,7 +48,7 @@
         </tr>
       </tbody>
     </table>
-    <form action = {% url 'lbforum_profile' %} method="post">
+    <form action = {% url 'lbforum_profile' user_id=view_user.pk %} method="post">
       {% csrf_token %}
       <input type = "hidden", name = "my_id" value = {{my_id}}>
       <input type = "hidden", name = "user_id" value = {{user_id}}>

@@ -51,7 +51,6 @@ class ForumChoiceField(ForumChoiceFieldMixin, forms.ModelChoiceField):
 class ForumForm(forms.Form):
     order_by = forms.ChoiceField(label=_('Order By'), choices=FORUM_ORDER_BY_CHOICES, required=False)
 
-
 class PostForm(forms.ModelForm):
     forum = ForumChoiceField(label=_('Forum'), required=False)
     topic_type = forms.ChoiceField(label=_('Topic Type'), required=False)
