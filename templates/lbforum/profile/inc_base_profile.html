@@ -21,25 +21,31 @@
             <table width="100%" cellspacing="0" cellpadding="2" border="0">
               <tbody>
                 <tr>
-                  <td width="33%">
+                  <td width="25%">
                     {% trans "Courses" %}: <strong>{{ courses_len }}</strong>
                   </td>
-                  <td width="33%">
+                  <td width="25%">
                     {% trans "Topics" %}: <strong>{{ view_user.topic_set.all.count }}</strong>
                   </td>
-                  <td width="33%">
+                  <td width="25%">
                     {% trans "Posts" %}: <strong>{{ view_user.post_set.all.count }}</strong>
+                  </td>
+                  <td width="25%">
+                    {% trans "Friends" %}: <strong>{{ my_friends | length }}</strong>
                   </td>
                 </tr>
                 <tr>
-                  <td width="33%">
+                  <td width="25%">
                     <a href="{% url 'lbforum_user_courses' user_id=view_user.pk %}">{% blocktrans %}View all courses{% endblocktrans %}</a>
                   </td>
-                  <td width="33%">
+                  <td width="25%">
                     <a href="{% url 'lbforum_user_topics' user_id=view_user.pk %}">{% blocktrans %}View all topics{% endblocktrans %}</a>
                   </td>
-                  <td width="33%">
+                  <td width="25%">
                     <a href="{% url 'lbforum_user_posts' user_id=view_user.pk %}">{% blocktrans %}View all posts{% endblocktrans %}</a>
+                  </td>
+                  <td width="25%">
+                    <a href="{% url 'lbforum_user_friends' user_id=view_user.pk %}">{% blocktrans %}View all friends{% endblocktrans %}</a>
                   </td>
                 </tr>
               </tbody>
