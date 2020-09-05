@@ -15,10 +15,10 @@
   {% paginate posts %}
   {% get_pages %}
   <div class="box">
-    {% for course in like_classes %}
-      <div class = "cell">
-        <span class = "course_header" style="color:grey">{% blocktrans %}liked courses {% endblocktrans %}</span>
-      </div>
+    <div class = "cell">
+      <span class = "course_header" style="color:grey">{% blocktrans %}liked courses {% endblocktrans %}</span>
+    </div>
+  {% for course in like_classes %}
         {% if course.1 %}
           <a class = "item_node" style="background-color:yellow" href="{{ course.get_absolute_url }}">
             <span>{{ course.0.name }} </span>
