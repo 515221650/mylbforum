@@ -118,7 +118,7 @@ class EditPostForm(PostForm):
 
     def save(self):
         post = self.instance
-        post.message = self.cleaned_data['message']
+        post.message = self.ced_leandata['message']
         post.updated_on = datetime.now()
         post.edited_by = self.user.lbforum_profile.nickname
         attachments = self.cleaned_data['attachments']
@@ -145,6 +145,14 @@ class NewPostForm(PostForm):
         super(NewPostForm, self).__init__(*args, **kwargs)
         if self.topic:
             self.fields['subject'].required = False
+        self.is_chat = 0
+        self.x = -1
+        self.y = -1
+
+    def set_chat(self, x, y):
+        self.is_chat = 1
+        self.x = x
+        self.y = y
 
     def save(self):
         topic_post = False
@@ -160,9 +168,15 @@ class NewPostForm(PostForm):
                           need_replay=self.cleaned_data['need_replay'],
                           need_reply_attachments=self.cleaned_data['need_reply_attachments'],
                           topic_type=topic_type,
+                          owns1=self.x,
+                          owns2=self.y
                           )
             topic_post = True
             topic.save()
+            profile1 = LBForumUserProfile.objects.get(id=self.x)
+            profile2 = LBForumUserProfile.objects.get(id=self.y)
+            profile1.add_chat(self.y, topic.id)
+            profile2.add_chat(self.x, topic.id)
         else:
             topic = self.topic
         post = Post(topic=topic, posted_by=self.user, poster_ip=self.ip,
