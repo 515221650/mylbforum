@@ -25,6 +25,12 @@ def profile(request, user_id=None, template_name="lbforum/profile/profile.html")
     view_user = request.user
     if user_id:
         view_user = get_object_or_404(User, pk=user_id)
+    if request.POST:
+        print("receive post")
+        # print(request.POST.get("digit", ""))
+        # my_id in "my_id"
+        # user_id in "user_id"
+
     view_only = view_user != request.user
     courses = get_class_by_user(view_user)
     print(len(courses))
@@ -121,7 +127,10 @@ def user_courses(request, user_id,
         'request': request,
         'posts': posts,
         'view_user': view_user,
+        'user_id' : user_id,
         'courses' : courses,
+        'is_my_profile' : is_my_profile,
+        'my_id' : my_id,
         'like_classes' : list(zip(like_classes, like_common)),
         'taken_classes' : list(zip(taken_classes, taken_common))
     }
