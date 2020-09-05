@@ -54,15 +54,16 @@
         </tr>
       </tbody>
     </table>
+    <br/>
     <form action = {% url 'lbforum_profile' user_id=view_user.pk %} method="post">
       {% csrf_token %}
       <input type = "hidden", name = "my_id" value = {{my_id}}>
       <input type = "hidden", name = "user_id" value = {{user_id}}>
       <input type = "hidden", name = "digit" value = {{10}}>
       <input type = "submit" class = "super normal button" value = "add friend" />  
-    </a>
-    <a class = "item_node" href = "{% url 'new_chat' user_id=view_user.pk %}">
-      <span>chat </span>
+    </form>
+    <a class = "super normal button" href = "{% url 'new_chat' user_id=view_user.pk %}">
+      chat 
     </a>
   </div>
 </div>

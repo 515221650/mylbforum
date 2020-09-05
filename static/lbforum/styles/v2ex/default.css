@@ -218,7 +218,7 @@ a.dark:hover {
 #Navigation ul li {
 	list-style: none;
 	float: left;
-	background-color: #1d8775;
+	background-color: #35cfb5;
     padding: 33px;
     width: 90px;
     /* border-radius: 3px; */
@@ -414,6 +414,10 @@ td.avatar_mini {
 
 .snow {
 	color: rgba(0, 0, 0, 0.15);
+	color: rgba(0, 0, 0, 0.55);
+    font-size: 20px;
+    /* line-height: 40px; */
+    margin: 20px;
 }
 
 .chevron {
