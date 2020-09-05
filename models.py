@@ -57,6 +57,9 @@ class Forum(models.Model):
     users_like = models.CharField(max_length=2000,default="[]")
     users_taken = models.CharField(max_length=2000,default="[]")
 
+    stars = models.FloatField(default=0.0)
+    stared_people = models.IntegerField(default=0)
+
     last_post = models.ForeignKey(
         'Post', models.SET_NULL,
         verbose_name=_('Last post'),
@@ -69,6 +72,11 @@ class Forum(models.Model):
         permissions = (
             ("sft_mgr_forum", _("Forum-Administrator")),
         )
+
+    def do_star(self, rank):
+        self.stars = (self.stars*self.stared_people + rank)/(self.stared_people + 1)
+        self.stared_people += 1
+        self.save()
 
     def change(self, user_id, old, new):
         users_like = self.get_users_like()
@@ -290,7 +298,6 @@ class LBForumUserProfile(models.Model):
 
     bio = models.TextField(blank=True)
 
-
     def __str__(self):
         return self.nickname or self.user.username
 
@@ -311,6 +318,7 @@ class LBForumUserProfile(models.Model):
         self.set_class(like_classes, 1)
         self.set_class(taken_classes, 2)
         return old
+
 
     def add_friend(self, user_id):
         friends = self.get_friend()
@@ -337,6 +345,13 @@ class LBForumUserProfile(models.Model):
 
     def get_chat_list(self):
         return json.loads(self.chatList)
+
+    def add_chat(self, other, topic_id):
+        chat_list = self.get_chat_list()
+        if topic_id not in chat_list.keys():
+            chat_list[other] = topic_id
+        self.chatList = json.dumps(chat_list)
+        self.save()
 
     def get_friend(self):
         return json.loads(self.friends)

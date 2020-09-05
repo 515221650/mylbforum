@@ -155,7 +155,7 @@ def topic(request, topic_id, template_name="lbforum/topic.html"):
     return render(request, template_name, ext_ctx)
 
 
-def chat(request, chat_id, template_name="lbforum/topic.html"):
+def chat(request, user_id, chat_id, template_name="lbforum/topic.html"):
     user = request.user
     topic = get_object_or_404(Topic, pk=chat_id)
     if topic.hidden and not topic.forum.is_admin(user):
@@ -256,7 +256,7 @@ def new_post(
 
 @login_required
 def new_chat_post(
-        request, forum_id=None, topic_id=None, form_class=NewPostForm,
+        request, user_id, forum_id=None, topic_id=None, form_class=NewPostForm,
         template_name='lbforum/post.html'):
     user = request.user
     if not user.lbforum_profile.nickname:
@@ -291,29 +291,14 @@ def new_chat_post(
                 return HttpResponseRedirect(reverse("lbforum_forum",
                                                     args=[forum.slug]))
     else:
-        qid = request.GET.get('qid', '')
-        if qid:
-            qpost = get_object_or_404(Post, id=qid)
-            initial['message'] = "[quote=%s]%s[/quote]" % (
-                qpost.posted_by.lbforum_profile, qpost.message)
-        form = form_class(initial=initial, forum=forum)
-
-    userid = user.id
-
-    ext_ctx = {
-        'forum': forum,
-        'show_forum_field': topic_post,
-        'form': form,
-        'topic': topic,
-        'first_post': first_post,
-        'post_type': post_type,
-        'preview': preview
-    }
-    ext_ctx['attachments'] = user.lbattachment_set.filter(
-        pk__in=request.POST.getlist('attachments'))
-    ext_ctx['is_new_post'] = True
-    ext_ctx['topic_post'] = topic_post
-    return render(request, template_name, ext_ctx)
+        form = form_class(
+            request.POST, user=user, forum=forum,
+            initial=initial,
+            topic=topic, ip=get_client_ip(request))
+        form.set_chat(user.id, user_id)
+        post = form.save()
+        forum = post.topic.forum
+    return HttpResponseRedirect(post.get_absolute_url_ext())
 
 
 
