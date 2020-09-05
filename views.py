@@ -106,14 +106,18 @@ def forum(
     users_taken = forum.get_users_taken()
     friends_like = list(filter(lambda x: x in friends, users_like))
     friends_taken = list(filter(lambda x: x in friends, users_taken))
-    print(friends_like)
-    print(friends_taken)
+    choose = 0
+    if forum.id in profile.get_like_classes():
+        choose = 1
+    if forum.id in profile.get_taken_classes():
+        choose = 2
     ext_ctx = {
         'request': request,
         'form': form, 'forum': forum, 'topics': topics,
         'topic_type': topic_type, 'topic_type2': topic_type2,
         'friends_like': friends_like,
-        'friends_taken': friends_taken
+        'friends_taken': friends_taken,
+        'choose':choose
     }
     return render(request, template_name, ext_ctx)
 

@@ -265,13 +265,21 @@ class LBForumUserProfile(models.Model):
     nickname = models.CharField(
         _("Nickname"), max_length=255, blank=False, default='')
     avatar = ThumbnailerImageField(_("Avatar"), upload_to='imgs/avatars', blank=True, null=True)
-    classes = models.CharField(max_length=10000, default="[1,2,3]")
+    classes = models.CharField(max_length=2000, default="[1,2,3]")
+    my_like_classes = models.CharField(max_length=2000, default="[1,2]")
+    my_taken_classes = models.CharField(max_length=2000, default="[3]")
     k = get_people_example()
-    friends = models.CharField(max_length=10000, default=k)
+    friends = models.CharField(max_length=2000, default=k)
     bio = models.TextField(blank=True)
 
     def __str__(self):
         return self.nickname or self.user.username
+
+    def get_like_classes(self):
+        return json.loads(self.my_like_classes)
+
+    def get_taken_classes(self):
+        return json.loads(self.my_taken_classes)
 
     def get_class(self):
         return json.loads(self.classes)
