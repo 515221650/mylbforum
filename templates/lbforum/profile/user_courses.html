@@ -20,11 +20,11 @@
     </div>
   {% for course in like_classes %}
         {% if course.1 %}
-          <a class = "item_node" style="background-color:yellow" href="{{ course.get_absolute_url }}">
+          <a class = "item_node" style="background-color:yellow" href="{{ course.0.get_absolute_url }}">
             <span>{{ course.0.name }} </span>
           </a>
         {% else %}
-          <a class = "item_node"  href="{{ course.get_absolute_url }}">
+          <a class = "item_node"  href="{{ course.0.get_absolute_url }}">
             <span>{{ course.0.name }} </span>
           </a>
         {% endif %}
@@ -36,11 +36,11 @@
     </div>
       {% for course in taken_classes %}
       {% if course.1 %}
-        <a class = "item_node" style="background-color:yellow" href="{{ course.get_absolute_url }}">
+        <a class = "item_node" style="background-color:yellow" href="{{ course.0.get_absolute_url }}">
           <span>{{ course.0.name }} </span>
         </a>
       {% else %}
-        <a class = "item_node"  href="{{ course.get_absolute_url }}">
+        <a class = "item_node"  href="{{ course.0.get_absolute_url }}">
           <span>{{ course.0.name }} </span>
         </a>
       {% endif %}
