@@ -248,8 +248,12 @@ class LBForumUserProfile(models.Model):
     nickname = models.CharField(
         _("Nickname"), max_length=255, blank=False, default='')
     avatar = ThumbnailerImageField(_("Avatar"), upload_to='imgs/avatars', blank=True, null=True)
-    classes = models.CharField(max_length=10000)
-    friends = models.CharField(max_length=10000)
+    classes = models.CharField(max_length=10000, default="[]")
+    friend1 = {"id":1, "nickname":111}
+    friend2 = {"id":2, "nickname": 222}
+    friendss = [friend1, friend2]
+    k = json.dumps(friendss)
+    friends = models.CharField(max_length=10000, default=k)
     bio = models.TextField(blank=True)
 
     def __str__(self):

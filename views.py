@@ -17,7 +17,7 @@ from lbutils import get_client_ip
 
 from .templatetags.lbforum_filters import topic_can_post
 from .forms import EditPostForm, NewPostForm, ForumForm
-from .models import Topic, Forum, Post
+from .models import Topic, Forum, Post, LBForumUserProfile
 
 
 User = get_user_model()
@@ -180,6 +180,11 @@ def new_post(
             initial['message'] = "[quote=%s]%s[/quote]" % (
                 qpost.posted_by.lbforum_profile, qpost.message)
         form = form_class(initial=initial, forum=forum)
+
+    userid = user.id
+
+    profile = LBForumUserProfile.objects.get(id=userid)
+    friends = profile.getfriend()
     ext_ctx = {
         'forum': forum,
         'show_forum_field': topic_post,
@@ -187,7 +192,8 @@ def new_post(
         'topic': topic,
         'first_post': first_post,
         'post_type': post_type,
-        'preview': preview
+        'preview': preview,
+        'friends': friends
     }
     ext_ctx['attachments'] = user.lbattachment_set.filter(
         pk__in=request.POST.getlist('attachments'))
