@@ -264,9 +264,15 @@ class LBForumUserProfile(models.Model):
 
     def set_class(self, x):
         self.classes = json.dumps(x)
+        self.save()
+
 
     def get_friend(self):
         return json.load(self.friends)
+
+    def set_friend(self, x):
+        self.friends = json.dumps(x)
+        self.save()
 
     def get_total_topics(self):
         return self.user.topic_set.count()
