@@ -30,7 +30,6 @@ def profile(request, user_id=None, template_name="lbforum/profile/profile.html")
     print(len(courses))
     ext_ctx = {'view_user': view_user, 'view_only': view_only, 'courses_len': len(courses)}
     return render(request, template_name, ext_ctx)
-}
 
 @login_required
 def change_profile(request, form_class=ProfileForm, template_name="lbforum/profile/change_profile.html"):
