@@ -129,10 +129,17 @@ def forum(
         'friends_like': friends_like,
         'friends_taken': friends_taken,
         'choose':choose,
-        'slug':forum_slug
+        'slug':forum_slug,
+        'avg_rating': "{:.2f}".format(forum.stars)
     }
     return render(request, template_name, ext_ctx)
 
+def rating(request):
+    slug = request.get('slug')
+    if request.get('rate') is not None:
+        forum = get_object_or_404(Forum, slug=forum_slug)
+        forum.do_star(int(request.get('rate')))
+    return forum(request, slug)
 
 def topic(request, topic_id, template_name="lbforum/topic.html"):
     user = request.user

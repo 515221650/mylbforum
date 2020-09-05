@@ -15,13 +15,27 @@
   {% paginate posts %}
   {% get_pages %}
   <div class="box">
-    <div class="cell">
-      <span class="fade" style="color:grey">{% blocktrans %}liked courses : {% endblocktrans %}</span>
-    </div>
     {% for course in like_classes %}
-      <div class="cell course">
-        <table width="100%" cellspacing="0" cellpadding="0" border="0">
-          <tbody >
+      <div class = "cell">
+        <span class = "course_header" style="color:grey">{% blocktrans %}liked courses {% endblocktrans %}</span>
+      </div>
+        <br> 
+        <br>
+        {% if course.1 %}
+          <a class = "item_node" style="background-color:yellow" href="{{ course.get_absolute_url }}">
+            <span>{{ course.0.name }} </span>
+          </a>
+        {% else %}
+          <a class = "item_node"  href="{{ course.get_absolute_url }}">
+            <span>{{ course.0.name }} </span>
+          </a>
+        {% endif %}
+          
+        <!-- <table width="100%" cellspacing="0" cellpadding="0" border="0">
+            <caption>
+              <span style="color:grey">{% blocktrans %}liked courses : {% endblocktrans %}</span>
+            </caption>
+              <tbody >
             <tr>
               {% if course.1 %}
             <td width="auto" valign="top" style="background-color:yellow">
@@ -35,31 +49,39 @@
               </td>
             </tr>
           </tbody>
-        </table>
-      </div>  
+        </table> -->
     {% endfor %}
+    <br> 
+    <br>
 
-    <div class="cell">
-      <span class="fade" style="color:grey">{% blocktrans %}taken courses : {% endblocktrans %}</span>
-    </div>
+      <span class = "course_header" style="color:grey">{% blocktrans %}taken courses {% endblocktrans %}</span>
+      <br> 
+      <br>
     {% for course in taken_classes %}
-    <div class="cell course">
-      <table width="100%" cellspacing="0" cellpadding="0" border="0">
-        <tbody>
-          <tr>
-            {% if course.1 %}
-            <td width="auto" valign="top" style="background-color:yellow">
-            {% else %}
-            <td width="auto" valign="top" >
-            {% endif %}
-              <strong>
-                <a href="{{ course.get_absolute_url }}">{{ course.0.name }}</a>
-              </strong>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>  
+      {% if course.1 %}
+        <a class = "item_node" style="background-color:yellow" href="{{ course.get_absolute_url }}">
+          <span>{{ course.0.name }} </span>
+        </a>
+      {% else %}
+        <a class = "item_node"  href="{{ course.get_absolute_url }}">
+          <span>{{ course.0.name }} </span>
+        </a>
+      {% endif %}
+        <!-- <table width="100%" cellspacing="0" cellpadding="0" border="0">
+          <tbody>
+            <tr>
+              {% if course.1 %}
+              <td width="auto" valign="top" style="background-color:yellow">
+              {% else %}
+              <td width="auto" valign="top" >
+              {% endif %}
+                <strong>
+                  <a href="{{ course.get_absolute_url }}">{{ course.0.name }}</a>
+                </strong>
+              </td>
+            </tr>
+          </tbody>
+        </table> -->
   {% endfor %}
 
     <div class="inner">

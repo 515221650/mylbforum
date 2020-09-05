@@ -10,39 +10,40 @@
 */
 .rate {
     float: left;
-        height: 40px;
-            padding: 0 10px;
-            }
-            .rate:not(:checked) > input {
-                position:absolute;
-                    top:-9999px;
-                    }
-                    .rate:not(:checked) > label {
-                        float:right;
-                            width:1em;
-                                overflow:hidden;
-                                    white-space:nowrap;
-                                        cursor:pointer;
-                                            font-size:20px;
-                                                color:#ccc;
-                                                }
-                                                .rate:not(:checked) > label:before {
-                                                    content: '★ ';
-                                                    }
-                                                    .rate > input:checked ~ label {
-                                                        color: #ffc700;    
-                                                        }
-                                                        .rate:not(:checked) > label:hover,
-                                                        .rate:not(:checked) > label:hover ~ label {
-                                                            color: #deb217;  
-                                                            }
-                                                            .rate > input:checked + label:hover,
-                                                            .rate > input:checked + label:hover ~ label,
-                                                            .rate > input:checked ~ label:hover,
-                                                            .rate > input:checked ~ label:hover ~ label,
-                                                            .rate > label:hover ~ input:checked ~ label {
-                                                                color: #c59b08;
-                                                                }
+    height: 40px;
+    padding: 0 10px;
+}
+.rate:not(:checked) > input {
+	position:absolute;
+	top:-9999px;
+}
+.rate:not(:checked) > label {
+	float:right;
+	width:1em;
+	overflow:hidden;
+	white-space:nowrap;
+	cursor:pointer;
+	font-size:20px;
+	color:#ccc;
+}
+.rate:not(:checked) > label:before {
+	content: '★ ';
+}
+.rate > input:checked ~ label {
+	color: #ffc700;    
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+	color: #deb217;  
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+	color: #c59b08;
+}
+
 html {
 }
 
@@ -54,9 +55,11 @@ body {
 	padding: 0px;
 	margin: 0px;
 	font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti !important;
-	background-color: #fff;
+	/*background-image: linear-gradient( 135deg, #ABDCFF 10%, #0396FF 100%);	*/
 	-webkit-text-size-adjust: none;
 }
+
+
 
 h1 {
 	font-size: 20px;
@@ -88,6 +91,13 @@ h4 {
 	font-weight: 500;
 	padding: 0px 0px 0px 0px;
 	margin: 0px;
+}
+
+.course_header {
+	text-align: left;
+	font-size: 15px;
+	margin: 10px 10px 10px 10px;
+	padding: 10px;
 }
 
 form {
@@ -165,6 +175,7 @@ a.dark:hover {
 	height: 40px;
 	text-align: center;
 	margin: 0px auto 0px auto;
+	background-color: #070c45;
 }
 
 #Logo {
@@ -210,7 +221,8 @@ a.dark:hover {
 
 #Wrapper {
 	background-color: #fff;
-	background-image: url("bohemian.jpg");
+	background-image: url("bohemian.jpg"); 
+	/*background-image: linear-gradient( 135deg, #ABDCFFAA 10%, #0380fdaa 100%);*/
 }
 
 #Main {
@@ -263,6 +275,7 @@ a.dark:hover {
 
 	background-color: #fff;
 	border: 2px solid #fff;
+	/*background-image: linear-gradient( 135deg, #90F7EC 10%, #32CCBC 100%);*/
 }
 
 .glass {
@@ -272,8 +285,8 @@ a.dark:hover {
 
 .box .inner, .glass .inner {
 	padding: 10px;
-	font-size: 12px;
-	line-height: 16px;
+	font-size: 15px;
+	line-height: 20px;
 }
 
 .box .highlighted {

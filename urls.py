@@ -14,7 +14,7 @@ forum_patterns = [
         views.forum, name='lbforum_forum'),
     url(r'^(?P<forum_slug>[\w-]+)/(?P<topic_type>[\w-]+)/(?P<topic_type2>[\w-]+)/$',
         views.forum, name='lbforum_forum'),
-    url(r'', views.forum, name='lbforum_forum')
+    url(r'', views.forum, name='lbforum_forum'),
 
 ]
 
@@ -70,6 +70,8 @@ urlpatterns = [
     url(r'^profile/', include(profile_patterns)),
     url(r'^api/', include(router.urls)),
     url(r'^chat/', include(chat_patterns)),
+
+    url(r'rating/', views.rating, name='rating'),
 
     url('^reply/new/(?P<topic_id>\d+)/$', views.new_chat_post,
         name='lbforum_new_replay'),
