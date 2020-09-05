@@ -21,19 +21,25 @@
             <table width="100%" cellspacing="0" cellpadding="2" border="0">
               <tbody>
                 <tr>
-                  <td width="50%">
+                  <td width="33%">
+                    {% trans "Courses" %}: <strong>{{ view_user.post_set.all.count }}</strong>
+                  </td>
+                  <td width="33%">
                     {% trans "Topics" %}: <strong>{{ view_user.topic_set.all.count }}</strong>
                   </td>
-                  <td width="50%">
+                  <td width="33%">
                     {% trans "Posts" %}: <strong>{{ view_user.post_set.all.count }}</strong>
                   </td>
                 </tr>
                 <tr>
-                  <td width="50%">
+                  <td width="33%">
                     <a href="{% url 'lbforum_user_topics' user_id=view_user.pk %}">{% blocktrans %}View all topics{% endblocktrans %}</a>
                   </td>
-                  <td width="50%">
+                  <td width="33%">
                     <a href="{% url 'lbforum_user_posts' user_id=view_user.pk %}">{% blocktrans %}View all posts{% endblocktrans %}</a>
+                  </td>
+                  <td width="33%">
+                    <p> {% blocktrans %}test{% endblocktrans %} </p>
                   </td>
                 </tr>
               </tbody>
