@@ -22,6 +22,9 @@ from .models import Topic, Forum, Post, LBForumUserProfile
 
 User = get_user_model()
 
+def build_dic(friends):
+    new_friends = [{"userid":i, "username":LBForumUserProfile.objects.get(id=i).nickname} for i in friends]
+    return new_friends
 
 def get_all_topics(user, select_related=True):
     topics = Topic.objects.all()
@@ -105,12 +108,14 @@ def forum(
     friends = profile.get_friend()
     if request.method == "POST":
         keyword = request.POST['stat']
-        profile.change_class(forum.id, keyword)
-        
+        old = profile.change_class(forum.id, keyword)
+        forum.change(userid, old, keyword)
+
     users_like = forum.get_users_like()
     users_taken = forum.get_users_taken()
     friends_like = list(filter(lambda x: x in friends, users_like))
     friends_taken = list(filter(lambda x: x in friends, users_taken))
+    friends = build_dic(friends)
     choose = 0
     if forum.id in profile.get_like_classes():
         choose = 1

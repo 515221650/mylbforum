@@ -54,9 +54,8 @@ class Forum(models.Model):
     num_topics = models.IntegerField(default=0)
     num_posts = models.IntegerField(default=0)
 
-
-    users_like = models.CharField(max_length=2000,default=get_people_example())
-    users_taken = models.CharField(max_length=2000,default=get_people_example())
+    users_like = models.CharField(max_length=2000,default="[]")
+    users_taken = models.CharField(max_length=2000,default="[]")
 
     last_post = models.ForeignKey(
         'Post', models.SET_NULL,
@@ -70,6 +69,21 @@ class Forum(models.Model):
         permissions = (
             ("sft_mgr_forum", _("Forum-Administrator")),
         )
+
+    def change(self, user_id, old, new):
+        users_like = self.get_users_like()
+        users_taken = self.get_users_taken()
+        if old == "like":
+            users_like.remove(user_id)
+        if old == "taken":
+            users_taken.remove(user_id)
+        if new == "like":
+            users_like.append(user_id)
+        if new == "taken":
+            users_taken.append(user_id)
+        self.users_taken = json.dumps(users_taken)
+        self.users_like = json.dumps(users_like)
+        self.save()
 
     def get_users_like(self):
         return json.loads(self.users_like)
@@ -265,10 +279,9 @@ class LBForumUserProfile(models.Model):
     nickname = models.CharField(
         _("Nickname"), max_length=255, blank=False, default='')
     avatar = ThumbnailerImageField(_("Avatar"), upload_to='imgs/avatars', blank=True, null=True)
-    my_like_classes = models.CharField(max_length=2000, default="[1,2]")
-    my_taken_classes = models.CharField(max_length=2000, default="[3]")
-    k = get_people_example()
-    friends = models.CharField(max_length=2000, default=k)
+    my_like_classes = models.CharField(max_length=2000, default="[]")
+    my_taken_classes = models.CharField(max_length=2000, default="[]")
+    friends = models.CharField(max_length=2000, default='[]')
     bio = models.TextField(blank=True)
 
     def __str__(self):
@@ -277,17 +290,20 @@ class LBForumUserProfile(models.Model):
     def change_class(self, class_id, new_att):
         like_classes = self.get_like_classes()
         taken_classes = self.get_taken_classes()
+        old = "not interested"
         if class_id in like_classes:
             like_classes.remove(class_id)
+            old = "like"
         if class_id in taken_classes:
             taken_classes.remove(class_id)
+            old = "taken"
         if new_att == "taken":
             taken_classes.append(class_id)
         if new_att == "like":
             like_classes.append(class_id)
         self.set_class(like_classes, 1)
         self.set_class(taken_classes, 2)
-
+        return old
 
     def get_like_classes(self):
         return json.loads(self.my_like_classes)
