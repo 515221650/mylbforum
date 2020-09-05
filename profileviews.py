@@ -14,6 +14,7 @@ from .models import LBForumUserProfile, Forum
 
 
 def get_class_by_id(course):
+    print(course)
     return Forum.objects.get(id=course)
 
 def get_class_by_user(user):
@@ -180,7 +181,6 @@ def user_courses(request, user_id,
     print("taken classes : ", taken_classes)
 
     print("taken classes id : ", taken_classes_id)
-    print("class 2 ", get_class_by_id(2))
     print("like classes : ", list(zip(like_classes, like_common)))
     print("taken classes : ", list(zip(taken_classes, taken_common)))
     
