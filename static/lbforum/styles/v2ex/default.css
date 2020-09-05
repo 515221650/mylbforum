@@ -8,6 +8,14 @@
 	
 	The best way to wipe IE6 from this planet is to forget it all since the beginning of your every new project.
 */
+input.taginput{
+	width: fit-content;
+}
+label.taginput{
+	width: fit-content;
+	background-color: #c5e7ff;
+	color: #bcbcbc;
+}
 .rate {
     float: left;
     height: 40px;
@@ -462,12 +470,14 @@ td.avatar_mini {
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	display: inline-block;
+	border: white;
 }
 
 .item_node:hover {
 	text-decoration: none;
 	background-color: #99a;
 	color: #fff;
+	border: white;
 }
 
 .topics td, .topics th {
@@ -1081,11 +1091,12 @@ a.fade:hover {
 }
 .tp-btn.selected {
     border-bottom: 5px solid #3c3; 
-    font-weight: bold;
+	font-weight: bold;
 }
 .item_node.selected {
-    background-color: #CCCCCC;
+    background-color: #AAAAAA;
     font-weight: bold;
+	border: white;
 }
 #TopMain #title {
     display: block;

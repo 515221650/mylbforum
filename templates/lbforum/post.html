@@ -84,10 +84,13 @@
 
         <ul id="uploaded_files">
         </ul>
+        <div >
         {% for i in tags %}
-          <input type="radio" name="tag" value={{i}} required/>
-          <label>{{i}}</label>
+          <input class="taginput" type="radio" name="tag" value={{i}} required/>
+          <label class="taginput" >{{i}}</label>
+          <br>
         {% endfor %}
+        </div>
         <div class="sep10"></div>
         <input type="submit" class="super normal button" value="{% trans "Submit" %}" name="submit"/>
         <input type="submit" class="super normal button" value="{% trans "Preview" %}" name="preview"/>
