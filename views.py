@@ -99,10 +99,22 @@ def forum(
         topics = topics.order_by('-sticky', '-last_reply_on')
 
     form = ForumForm(request.GET)
+    userid = user.id
+    profile = LBForumUserProfile.objects.get(id=userid)
+    friends = profile.get_friend()
+    users_like = forum.get_users_like()
+    users_taken = forum.get_users_taken()
+    friends_like = list(filter(lambda x: x in friends, users_like))
+    friends_taken = list(filter(lambda x: x in friends, users_taken))
+    print(friends_like)
+    print(friends_taken)
     ext_ctx = {
         'request': request,
         'form': form, 'forum': forum, 'topics': topics,
-        'topic_type': topic_type, 'topic_type2': topic_type2}
+        'topic_type': topic_type, 'topic_type2': topic_type2,
+        'friends_like': friends_like,
+        'friends_taken': friends_taken
+    }
     return render(request, template_name, ext_ctx)
 
 
@@ -183,8 +195,6 @@ def new_post(
 
     userid = user.id
 
-    profile = LBForumUserProfile.objects.get(id=userid)
-    friends = profile.getfriend()
     ext_ctx = {
         'forum': forum,
         'show_forum_field': topic_post,
@@ -192,8 +202,7 @@ def new_post(
         'topic': topic,
         'first_post': first_post,
         'post_type': post_type,
-        'preview': preview,
-        'friends': friends
+        'preview': preview
     }
     ext_ctx['attachments'] = user.lbattachment_set.filter(
         pk__in=request.POST.getlist('attachments'))

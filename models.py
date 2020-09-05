@@ -15,6 +15,13 @@ from django.utils.encoding import python_2_unicode_compatible
 from lbattachment.models import LBAttachment
 
 
+def get_people_example():
+    friend1 = {"userid":1, "username":111}
+    friend2 = {"userid":2, "username": 222}
+    k = json.dumps([friend1, friend2])
+    return k
+
+
 @python_2_unicode_compatible
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -47,6 +54,10 @@ class Forum(models.Model):
     num_topics = models.IntegerField(default=0)
     num_posts = models.IntegerField(default=0)
 
+
+    users_like = models.CharField(max_length=2000,default=get_people_example())
+    users_taken = models.CharField(max_length=2000,default=get_people_example())
+
     last_post = models.ForeignKey(
         'Post', models.SET_NULL,
         verbose_name=_('Last post'),
@@ -59,6 +70,12 @@ class Forum(models.Model):
         permissions = (
             ("sft_mgr_forum", _("Forum-Administrator")),
         )
+
+    def get_users_like(self):
+        return json.loads(self.users_like)
+
+    def get_users_taken(self):
+        return json.loads(self.users_taken)
 
     def __str__(self):
         return self.name
@@ -249,10 +266,7 @@ class LBForumUserProfile(models.Model):
         _("Nickname"), max_length=255, blank=False, default='')
     avatar = ThumbnailerImageField(_("Avatar"), upload_to='imgs/avatars', blank=True, null=True)
     classes = models.CharField(max_length=10000, default="[]")
-    friend1 = {"userid":1, "username":111}
-    friend2 = {"userid":2, "username": 222}
-    friendss = [friend1, friend2]
-    k = json.dumps(friendss)
+    k = get_people_example()
     friends = models.CharField(max_length=10000, default=k)
     bio = models.TextField(blank=True)
 
@@ -266,9 +280,8 @@ class LBForumUserProfile(models.Model):
         self.classes = json.dumps(x)
         self.save()
 
-
     def get_friend(self):
-        return json.load(self.friends)
+        return json.loads(self.friends)
 
     def set_friend(self, x):
         self.friends = json.dumps(x)
