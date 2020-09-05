@@ -146,17 +146,10 @@ def forum(
     return render(request, template_name, ext_ctx)
 
 def rating(request):
-<<<<<<< HEAD
-    slug = request.get('slug')
-    if request.get('rate') is not None:
-        # forum = get_object_or_404(Forum, slug=forum_slug)
-        forum.do_star(int(request.get('rate')))
-=======
     slug = request.POST.get('slug')
     if request.POST.get('rate') is not None:
         theforum = get_object_or_404(Forum, slug=slug)
         theforum.do_star(int(request.POST.get('rate')))
->>>>>>> jcyszy
     return forum(request, slug)
 
 def topic(request, topic_id, template_name="lbforum/topic.html"):
