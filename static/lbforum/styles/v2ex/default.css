@@ -244,7 +244,7 @@ a.dark:hover {
 	/*background-color: #fff;
 	background-image: url("bohemian.jpg");  */
 	background-image: linear-gradient( 135deg, #c4e7ff 10%, #5cadfe 100%);
-	height: 100%;
+	min-height: 100%;
 }
 
 #Main {
