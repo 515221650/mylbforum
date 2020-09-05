@@ -11,6 +11,32 @@
   <div class="sep20"></div>
   {% lbf_status %}
   <div class="sep20"></div>
+  {% for chat in chatlist %}
+  <div class="box">
+    <div class="cell">
+      <table cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tbody>
+          <tr>
+            <td width="48" valign="top">
+              <a href="{% url 'lbforum_profile' user_id=chat.user.pk %}">
+                <img width="48px" height="48px" src="{{ chat.user.lbforum_profile.get_avatar_url }}" alt=""/>
+              </a>
+            </td>
+            <td width="10" valign="top"></td>
+            <td width="auto" align="left">
+              <span class="bigger"><a href="{% url 'lbforum_profile' user_id=chat.user.pk %}">{{ chat.user.lbforum_profile }}</a></span>
+              <div class="sep5"></div>
+              <span class="fade"></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="inner">
+      <span class="fade">{{chat.last_sentence}}</span>
+    </div>
+  </div>
+  {% endfor %}
   <!--<div class="box" id="friend-links-box">
     <div class="cell">
       <span class="fade">

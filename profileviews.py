@@ -38,6 +38,7 @@ def profile(request, user_id=None, template_name="lbforum/profile/profile.html")
         print("friend ", my_profile.get_friend())
         my_profile.add_friend(user_id)
         print("friend ", my_profile.get_friend())
+    return redirect("/profile/" + str(view_user.id) + "/courses/")
 
     view_only = view_user != request.user
     my_id = request.user.id
@@ -152,6 +153,8 @@ def user_courses(request, user_id,
     for course in taken_classes_id:
         taken_classes.append(get_class_by_id(course))
 
+    print("taken classes : ", taken_classes)
+
     my_id = request.user.id
     my_profile = LBForumUserProfile.objects.get(id=my_id)
     my_like_classes_id = my_profile.get_like_classes()
@@ -160,19 +163,27 @@ def user_courses(request, user_id,
     like_common = []
     taken_common = []
 
-    for course in my_like_classes_id:
-        if (not is_my_profile) and (course in like_classes_id):
+    for course in like_classes_id:
+        if (not is_my_profile) and (course in my_like_classes_id):
             like_common.append(True)
         else:
             like_common.append(False)
 
-    for course in my_taken_classes_id:
-        if (not is_my_profile) and (course in taken_classes_id):
+    print("taken classes : ", taken_classes)
+
+    for course in taken_classes_id:
+        if (not is_my_profile) and (course in my_taken_classes_id):
             taken_common.append(True)
         else:
             taken_common.append(False)
 
+    print("taken classes : ", taken_classes)
 
+    print("taken classes id : ", taken_classes_id)
+    print("class 2 ", get_class_by_id(2))
+    print("like classes : ", list(zip(like_classes, like_common)))
+    print("taken classes : ", list(zip(taken_classes, taken_common)))
+    
     context = {
         'request': request,
         'posts': posts,
