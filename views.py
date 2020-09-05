@@ -245,9 +245,6 @@ def new_post(
             initial['message'] = "[quote=%s]%s[/quote]" % (
                 qpost.posted_by.lbforum_profile, qpost.message)
         form = form_class(initial=initial, forum=forum)
-    obj = topic.owns1
-    if topic.owns1 == user.id:
-        obj = topic.owns2
     ext_ctx = {
         'forum': forum,
         'show_forum_field': topic_post,
@@ -255,8 +252,7 @@ def new_post(
         'topic': topic,
         'first_post': first_post,
         'post_type': post_type,
-        'preview': preview,
-        'userobj':obj
+        'preview': preview
     }
     ext_ctx['attachments'] = user.lbattachment_set.filter(
         pk__in=request.POST.getlist('attachments'))

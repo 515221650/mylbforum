@@ -172,10 +172,6 @@ class NewPostForm(PostForm):
                           )
             topic_post = True
             topic.save()
-            profile1 = LBForumUserProfile.objects.get(id=self.x)
-            profile2 = LBForumUserProfile.objects.get(id=self.y)
-            profile1.add_chat(self.y, topic.id)
-            profile2.add_chat(self.x, topic.id)
         else:
             topic = self.topic
         post = Post(topic=topic, posted_by=self.user, poster_ip=self.ip,
