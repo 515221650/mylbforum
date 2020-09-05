@@ -51,11 +51,10 @@
     {% endfor %}
     <br> 
     <br>
-
+    <div class = "cell">
       <span class = "course_header" style="color:grey">{% blocktrans %}taken courses {% endblocktrans %}</span>
-      <br> 
-      <br>
-    {% for course in taken_classes %}
+    </div>
+      {% for course in taken_classes %}
       {% if course.1 %}
         <a class = "item_node" style="background-color:yellow" href="{{ course.get_absolute_url }}">
           <span>{{ course.0.name }} </span>

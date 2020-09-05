@@ -105,15 +105,27 @@ def forum(
     userid = user.id
     profile = LBForumUserProfile.objects.get(id=userid)
     friends = profile.get_friend()
+    print('friends:')
+    print(friends)
     if request.method == "POST":
-        keyword = request.POST['stat']
-        old = profile.change_class(forum.id, keyword)
-        forum.change(userid, old, keyword)
+        keyword = request.POST.get('stat')
+        if keyword is not None:
+            old = profile.change_class(forum.id, keyword)
+            forum.change(userid, old, keyword)
 
     users_like = forum.get_users_like()
     users_taken = forum.get_users_taken()
-    friends_like = list(filter(lambda x: x in friends, users_like))
-    friends_taken = list(filter(lambda x: x in friends, users_taken))
+    friends_like = []
+    friends_taken = []
+    for i in friends:
+        if int(i) in users_like:
+            profile = LBForumUserProfile.objects.get(id=int(i))
+            friends_like.append({ 'username': profile.__str__(), 'userid':profile.id})
+        if int(i) in users_taken:
+            profile = LBForumUserProfile.objects.get(id=int(i))
+            friends_like.append({ 'username': profile.__str__(), 'userid':profile.id})
+    print('friends_taken:')
+    print(friends_taken)
     friends = build_dic(friends)
     choose = 0
     if forum.id in profile.get_like_classes():
@@ -134,10 +146,17 @@ def forum(
     return render(request, template_name, ext_ctx)
 
 def rating(request):
+<<<<<<< HEAD
     slug = request.get('slug')
     if request.get('rate') is not None:
         # forum = get_object_or_404(Forum, slug=forum_slug)
         forum.do_star(int(request.get('rate')))
+=======
+    slug = request.POST.get('slug')
+    if request.POST.get('rate') is not None:
+        theforum = get_object_or_404(Forum, slug=slug)
+        theforum.do_star(int(request.POST.get('rate')))
+>>>>>>> jcyszy
     return forum(request, slug)
 
 def topic(request, topic_id, template_name="lbforum/topic.html"):
