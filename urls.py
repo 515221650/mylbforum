@@ -14,6 +14,8 @@ forum_patterns = [
         views.forum, name='lbforum_forum'),
     url(r'^(?P<forum_slug>[\w-]+)/(?P<topic_type>[\w-]+)/(?P<topic_type2>[\w-]+)/$',
         views.forum, name='lbforum_forum'),
+    url(r'', views.forum, name='lbforum_forum')
+
 ]
 
 topic_patterns = [

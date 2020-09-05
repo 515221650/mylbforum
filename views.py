@@ -79,6 +79,7 @@ def recent(request, template_name="lbforum/recent.html"):
 def forum(
         request, forum_slug, topic_type='', topic_type2='',
         template_name="lbforum/forum.html"):
+
     forum = get_object_or_404(Forum, slug=forum_slug)
     user = request.user
     topics = get_all_topics(user)
@@ -102,6 +103,10 @@ def forum(
     userid = user.id
     profile = LBForumUserProfile.objects.get(id=userid)
     friends = profile.get_friend()
+    if request.method == "POST":
+        keyword = request.POST['stat']
+        profile.change_class(forum.id, keyword)
+        
     users_like = forum.get_users_like()
     users_taken = forum.get_users_taken()
     friends_like = list(filter(lambda x: x in friends, users_like))
@@ -111,13 +116,15 @@ def forum(
         choose = 1
     if forum.id in profile.get_taken_classes():
         choose = 2
+
     ext_ctx = {
         'request': request,
         'form': form, 'forum': forum, 'topics': topics,
         'topic_type': topic_type, 'topic_type2': topic_type2,
         'friends_like': friends_like,
         'friends_taken': friends_taken,
-        'choose':choose
+        'choose':choose,
+        'slug':forum_slug
     }
     return render(request, template_name, ext_ctx)
 
@@ -213,6 +220,7 @@ def new_post(
     ext_ctx['is_new_post'] = True
     ext_ctx['topic_post'] = topic_post
     return render(request, template_name, ext_ctx)
+
 
 
 @login_required

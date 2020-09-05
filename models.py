@@ -265,7 +265,6 @@ class LBForumUserProfile(models.Model):
     nickname = models.CharField(
         _("Nickname"), max_length=255, blank=False, default='')
     avatar = ThumbnailerImageField(_("Avatar"), upload_to='imgs/avatars', blank=True, null=True)
-    classes = models.CharField(max_length=2000, default="[1,2,3]")
     my_like_classes = models.CharField(max_length=2000, default="[1,2]")
     my_taken_classes = models.CharField(max_length=2000, default="[3]")
     k = get_people_example()
@@ -275,6 +274,21 @@ class LBForumUserProfile(models.Model):
     def __str__(self):
         return self.nickname or self.user.username
 
+    def change_class(self, class_id, new_att):
+        like_classes = self.get_like_classes()
+        taken_classes = self.get_taken_classes()
+        if class_id in like_classes:
+            like_classes.remove(class_id)
+        if class_id in taken_classes:
+            taken_classes.remove(class_id)
+        if new_att == "taken":
+            taken_classes.append(class_id)
+        if new_att == "like":
+            like_classes.append(class_id)
+        self.set_class(like_classes, 1)
+        self.set_class(taken_classes, 2)
+
+
     def get_like_classes(self):
         return json.loads(self.my_like_classes)
 
@@ -282,10 +296,15 @@ class LBForumUserProfile(models.Model):
         return json.loads(self.my_taken_classes)
 
     def get_class(self):
-        return json.loads(self.classes)
+        classes = self.get_like_classes() + self.get_taken_classes()
+        classes = list(set(classes))
+        return classes
 
-    def set_class(self, x):
-        self.classes = json.dumps(x)
+    def set_class(self, x, op):
+        if op == 1:
+            self.my_like_classes = json.dumps(x)
+        else:
+            self.my_taken_classes = json.dumps(x)
         self.save()
 
     def get_friend(self):
