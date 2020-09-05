@@ -258,6 +258,7 @@ def new_post(
 def new_chat_post(
         request, user_id, forum_id=None, topic_id=None, form_class=NewPostForm,
         template_name='lbforum/post.html'):
+    post = ""
     user = request.user
     if not user.lbforum_profile.nickname:
         return redirect('lbforum_change_profile')
@@ -296,8 +297,8 @@ def new_chat_post(
             initial=initial,
             topic=topic, ip=get_client_ip(request))
         form.set_chat(user.id, user_id)
-        post = form.save()
-        forum = post.topic.forum
+        if form.is_valid():
+            post = form.save()
     return HttpResponseRedirect(post.get_absolute_url_ext())
 
 
