@@ -58,3 +58,15 @@ def user_posts(request, user_id,
         'view_user': view_user
     }
     return render(request, template_name, context)
+
+@login_required
+def user_courses(request, user_id,
+               template_name='lbforum/profile/user_courses.html'):
+    view_user = User.objects.get(pk=user_id)
+    posts = view_user.post_set.order_by('-created_on').select_related()
+    context = {
+        'request': request,
+        'posts': posts,
+        'view_user': view_user
+    }
+    return render(request, template_name, context)
