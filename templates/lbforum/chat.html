@@ -12,7 +12,29 @@
 {% endblock %}
 
 {% block content_right_bar %}
-  {% include 'lbforum/widgets/cur_user_profile.html' %}
+<div class="cell">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tbody>
+                              <tr>
+                                            <td width="48" valign="top">
+                                                            <a href="{% url 'lbforum_profile' user_id=userobj.pk %}">
+                                                                              <img width="48px" height="48px" src="{{ userobj.lbforum_profile.get_avatar_url }}" alt=""/>
+                                                                                              </a>
+                                                                                                            </td>
+                                                                                                                          <td width="10" valign="top"></td>
+                                                                                                                                        <td width="auto" align="left">
+                                                                                                                                                        <span class="bigger"><a href="{% url 'lbforum_profile' user_id=userobj.pk %}">{{ userobj.lbforum_profile }}</a></span>
+                                                                                                                                                                        <div class="sep5"></div>
+                                                                                                                                                                                        <span class="fade"></span>
+                                                                                                                                                                                                      </td>
+                                                                                                                                                                                                                  </tr>
+                                                                                                                                                                                                                            </tbody>
+                                                                                                                                                                                                                                    </table>
+                                                                                                                                                                                                                                          </div>
+                                                                                                                                                                                                                                                <div class="inner">
+                                                                                                                                                                                                                                                        <span class="fade">{% trans "Joined on" %}: <strong>{{userobj.date_joined|date:"Y-m-d"}}</strong></span>
+                                                                                                                                                                                                                                                              </div>
+                                                                                                                                                                                                                                                                  </div>
 {% endblock %}
 
 {% block extra_header %}
@@ -52,7 +74,7 @@
   {% if  topic|topic_can_post:user %}
     <div class="sep20"></div>
     <div class="box" id="quick-reply-box">
-      <form action="{% url 'lbforum_new_replay' topic_id=topic.pk %}" accept-charset="utf-8" method="post" class="frm-form">
+      <form action="{% url 'chat_new_replay' topic_id=topic.pk %}" accept-charset="utf-8" method="post" class="frm-form">
         <div class="cell"><div class="fr fade"><a class="dark" href="#Top">Top&uarr;</a></div>
           <span class="fade">
             {% trans "Quick reply to this topic" %}
