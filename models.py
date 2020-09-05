@@ -175,6 +175,7 @@ class Topic(models.Model):
     closed = models.BooleanField(default=False)
     sticky = models.BooleanField(default=False)
     hidden = models.BooleanField(default=False)
+    is_chat = models.BooleanField(default=False)
     level = models.SmallIntegerField(choices=LEVEL_CHOICES, default=30)
 
     owns1 = models.IntegerField(default=-1)
@@ -278,7 +279,7 @@ class Post(models.Model):
         topic = self.topic
         post_idx = topic.posts.filter(created_on__lte=self.created_on).count()
         page = (post_idx - 1) / elp_setttings.PER_PAGE + 1
-        return '%s?page=%s#p%s' % (topic.get_absolute_url().replace("topic","chat"), page, self.pk)
+        return '%s?page=%s#p%s' % (topic.get_absolute_url(), page, self.pk)
 
 
 @python_2_unicode_compatible

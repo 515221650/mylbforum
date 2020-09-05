@@ -31,6 +31,7 @@ def get_all_topics(user, select_related=True):
         qparam = Q(hidden=False)
         if user.is_authenticated:
             qparam = qparam | Q(forum__admins=user) | Q(posted_by=user)
+        qparam = Q(is_chat=False) & qparam
         topics = topics.filter(qparam)
     if select_related:
         topics = topics.select_related(
@@ -60,6 +61,7 @@ def index(request, template_name="lbforum/index.html"):
     topics = None
     user = request.user
     topics = get_all_topics(user)
+
     topics = topics.order_by('-last_reply_on')[:20]
     ctx['topics'] = topics
     return render(request, template_name, ctx)
@@ -334,7 +336,7 @@ def new_chat_post(
             post = form.save()
             forum = post.topic.forum
             if topic:
-                return HttpResponseRedirect(post.get_absolute_url_ext())
+                return HttpResponseRedirect(post.get_absolute_url_ext().replace("topic", "chat"))
             else:
                 return HttpResponseRedirect(reverse("lbforum_forum",
                                                     args=[forum.slug]))
@@ -346,7 +348,8 @@ def new_chat_post(
                       need_reply_attachments=False,
                       topic_type=TopicType.objects.get(name="test"),
                       owns1=user_id,
-                      owns2=user.id
+                      owns2=user.id,
+                      is_chat = True
                       )
         topic_post = True
         topic.save()
