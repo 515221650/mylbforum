@@ -117,9 +117,10 @@
             <div class="sep10"></div>
             <div class="sep10"></div>
              <div align="left">
-             <form>
+             <form action = "rating">
              {% csrf_token %}
               <div class="rate">
+              <input type="hidden" name="slug" value= {{slug}} />
               <input type="radio" id="star5" name="rate" value="5" />
               <label for="star5" title="text">5 stars</label>
               <input type="radio" id="star4" name="rate" value="4" />
@@ -132,19 +133,9 @@
               <label for="star1" title="text">1 star</label>
               </div>
               </form>
-              <span class="fa fa-star"></span>
             </div>
             <br>
-            <br><br><div align="left">
-              <div class="rate">
-              <label for="star5" title="text">5 stars</label>
-              <label for="star4" title="text">4 stars</label>
-              <label for="star3" title="text">3 stars</label>
-              <label for="star2" title="text">2 stars</label>
-              <label for="star1" title="text">1 star</label>
-              </div>
-            </div>
-<br>
+            <br>
             <div class="sep20"></div>
             <div class="sep20"></div>
             <div align="left">
