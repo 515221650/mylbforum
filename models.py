@@ -312,6 +312,11 @@ class LBForumUserProfile(models.Model):
         self.set_class(taken_classes, 2)
         return old
 
+    def add_friend(self, user_id):
+        friends = self.get_friend()
+        if user_id not in friends:
+            friends.append(user_id)
+
     def get_like_classes(self):
         return json.loads(self.my_like_classes)
 
