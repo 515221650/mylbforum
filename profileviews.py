@@ -42,9 +42,11 @@ def profile(request, user_id=None, template_name="lbforum/profile/profile.html")
     view_only = view_user != request.user
     courses = get_class_by_user(view_user)
     my_id = request.user.id
+    my_profile = LBForumUserProfile.objects.get(id=my_id)
+    my_friends = my_profile.get_friend()
     print(len(courses))
     ext_ctx = {'view_user': view_user, 'view_only': view_only, 'courses_len': len(courses)
-    , 'my_id' : my_id, 'user_id' : user_id}
+    , 'my_id' : my_id, 'user_id' : user_id, 'my_friends' : my_friends}
     return render(request, template_name, ext_ctx)
 
 @login_required
@@ -86,6 +88,25 @@ def user_posts(request, user_id,
         'view_user': view_user
     }
     return render(request, template_name, context)
+
+@login_required
+def user_friends(request, user_id,
+               template_name='lbforum/profile/user_friends.html'):
+    view_user = User.objects.get(pk=user_id)
+    user_profile = LBForumUserProfile.objects.get(id=user_id)
+    user_friends = user_profile.get_friend()
+    posts = view_user.post_set.order_by('-created_on').select_related()
+    user_friends = [int(friend_id) for friend_id in user_friends]
+    friends = [LBForumUserProfile.objects.get(id=friend_id).user for friend_id in user_friends]
+    print(list(zip(user_friends, friends)))
+    context = {
+        'request': request,
+        'posts': posts,
+        'view_user': view_user,
+        'user_friends': list(zip(user_friends, friends))
+    }
+    return render(request, template_name, context)
+
 
 @login_required
 def user_courses(request, user_id,

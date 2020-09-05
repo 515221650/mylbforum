@@ -57,7 +57,9 @@ profile_patterns = [
     url('^(?P<user_id>\d+)/posts/$', profileviews.user_posts,
         name='lbforum_user_posts'),
     url('^(?P<user_id>\d+)/courses/$', profileviews.user_courses,
-        name='lbforum_user_courses'),        
+        name='lbforum_user_courses'),  
+    url('^(?P<user_id>\d+)/friends/$', profileviews.user_friends,
+        name='lbforum_user_friends'),  
     url(r'^change/$', profileviews.change_profile,
         name='lbforum_change_profile'),
 ]

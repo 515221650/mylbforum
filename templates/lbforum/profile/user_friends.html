@@ -1,0 +1,35 @@
+{% extends 'lbforum/profile/base.html' %}
+
+{% load i18n %}
+{% load lbforum_filters %}
+{% load lbforum_tags %}
+{% load el_pagination_tags %}
+
+{% block title %}
+  {% blocktrans %}{{ view_user.lbforum_profile }}'s posts{% endblocktrans %}
+{% endblock %}
+
+{% block content_content %}
+  {% include 'lbforum/profile/inc_base_profile.html' %}
+  <div class="sep20"></div>
+  {% paginate posts %}
+  {% get_pages %}
+  <div class="box">
+    {% for friend in user_friends %}
+        <a class = "item_node"  href="{% url 'lbforum_profile' user_id=friend.0  %}">
+          <div>
+          <img width="80px" height="80px" src="{{ friend.1.lbforum_profile.get_large_avatar_url }}" alt=""/>
+        </div>
+        <br/>
+          <div>
+            <span class = "image_name" >{{ friend.1.username }} </span>
+          </div>
+          </a>
+          
+    {% endfor %}
+
+    <div class="inner">
+      {% show_pages %}
+    </div>
+  </div>
+{% endblock %}
