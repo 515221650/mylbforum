@@ -8,6 +8,13 @@
 	
 	The best way to wipe IE6 from this planet is to forget it all since the beginning of your every new project.
 */
+input.taginput{
+	width: fit-content !important;
+}
+label.taginput{
+	width: fit-content !important;
+	color: #636363;
+}
 .rate {
     float: left;
     height: 40px;
@@ -218,11 +225,12 @@ a.dark:hover {
 #Navigation ul li {
 	list-style: none;
 	float: left;
-	background-color: #35cfb5;
+	/*background-color: #35cfb5;*/
     padding: 33px;
     width: 90px;
     /* border-radius: 3px; */
-    text-align: center;
+	text-align: center;
+	padding-left: 0px;
 }
 
 #Navigation ul li a {
@@ -415,9 +423,13 @@ td.avatar_mini {
 .snow {
 	color: rgba(0, 0, 0, 0.15);
 	color: rgba(0, 0, 0, 0.55);
-    font-size: 20px;
+    /*font-size: 20px; */
     /* line-height: 40px; */
     margin: 20px;
+}
+
+.rating {
+    font-size: 20px;
 }
 
 .chevron {
@@ -462,12 +474,14 @@ td.avatar_mini {
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	display: inline-block;
+	border: white;
 }
 
 .item_node:hover {
 	text-decoration: none;
 	background-color: #99a;
 	color: #fff;
+	border: white;
 }
 
 .topics td, .topics th {
@@ -1099,11 +1113,12 @@ a.fade:hover {
 }
 .tp-btn.selected {
     border-bottom: 5px solid #3c3; 
-    font-weight: bold;
+	font-weight: bold;
 }
 .item_node.selected {
-    background-color: #CCCCCC;
+    background-color: #AAAAAA;
     font-weight: bold;
+	border: white;
 }
 #TopMain #title {
     display: block;
@@ -1241,4 +1256,12 @@ a.fade:hover {
 
 #id_subject {
     width: 620px !important;
+}
+input.taginput{
+	width: fit-content !important;
+}
+label.taginput imp{
+	width: fit-content !important;
+	background-color: #c5e7ff;
+	color: #bcbcbc;
 }

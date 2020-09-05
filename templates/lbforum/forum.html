@@ -71,6 +71,27 @@
 
     {% lbf_categories_and_forums %}
     <div class="sep20"></div>
+{% if forum.topictype_set.all.count %}
+<div class="box">
+    <div class="cell">
+        <span class="fade">{% trans "Topic Type" %}</span>
+    </div>
+    <div class="inner">
+        <a class="item_node {% if not topic_type2 %}selected{% endif %}" 
+            href="{% forum_url forum topic_type "" %}">
+                <span> {% trans "All" %} </span>
+        </a>
+        {% for tp in forum.topictype_set.all %}
+          {% ifnotequal tp|stringformat:"s" "test" %}
+            <a class="item_node {% if topic_type2 == tp.slug %}selected{% endif %}" 
+                href="{% forum_url forum topic_type tp.slug %}">
+                    <span> {{ tp }} </span>
+            </a>
+          {% endifnotequal %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
 
 {% endblock %}
 
@@ -95,39 +116,36 @@
               <span class="chevron">&raquo;</span>
               {{ forum }}
             </span>
-            <div class="sep10"></div>
-            <div class="sep10"></div>
-
-                <div class = "snow">
-                    {{avg_rating}}
-                </div>
-              <div align="left">
-              <form action = {% url 'rating' %} method = "post">
-                {% csrf_token %}
-                <div class="rate">
-                  <input type="hidden" name="slug" value= {{slug}} >
-                  <input type="radio" id="star5" name="rate" value=5 >
-                  <label for="star5" title="text">5 stars</label>
-                  <input type="radio" id="star4" name="rate" value=4 >
-                  <label for="star4" title="text">4 stars</label>
-                  <input type="radio" id="star3" name="rate" value=3 >
-                  <label for="star3" title="text">3 stars</label>
-                  <input type="radio" id="star2" name="rate" value=2 >
-                  <label for="star2" title="text">2 stars</label>
-                  <input type="radio" id="star1" name="rate" value=1 >
-                  <label for="star1" title="text">1 star</label>
-                </div>
-                <div>
-                  <input type="submit" value = "submit" class="normal button" width="50">
-                </div>
-              </form>
-            </div>
-            <br>
-            <div class="sep20"></div>
             <div align="left">
-              <a href="{% url 'lbforum_new_topic' forum_id=forum.pk %}" class="super normal button">{% trans "Post new topic" %}</a>
+              <div style="float:right;">
+                <a href="{% url 'lbforum_new_topic' forum_id=forum.pk %}" class="super normal button">{% trans "Post new topic" %}</a>
+              </div>
+              <div class = "snow rating">
+                  {{avg_rating}}
+              </div>
+              <div>
+                <form action = {% url 'rating' %} method = "post">
+                  {% csrf_token %}
+                  <div class="rate">
+                    <input type="hidden" name="slug" value= {{slug}} >
+                    <input type="radio" id="star5" name="rate" value=5 >
+                    <label for="star5" title="text">5 stars</label>
+                    <input type="radio" id="star4" name="rate" value=4 >
+                    <label for="star4" title="text">4 stars</label>
+                    <input type="radio" id="star3" name="rate" value=3 >
+                    <label for="star3" title="text">3 stars</label>
+                    <input type="radio" id="star2" name="rate" value=2 >
+                    <label for="star2" title="text">2 stars</label>
+                    <input type="radio" id="star1" name="rate" value=1 >
+                    <label for="star1" title="text">1 star</label>
+                  </div>
+                  <div>
+                    <input type="submit" value = "submit" class="normal button" width="50">
+                  </div>
+                </form>
+              </div>
             </div>
-                       </div>
+
             <div class="sep5"></div>
             <div class="sep10"></div>
             <div>
