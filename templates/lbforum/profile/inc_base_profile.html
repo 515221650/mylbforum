@@ -33,13 +33,13 @@
                 </tr>
                 <tr>
                   <td width="33%">
+                    <a href="{% url 'lbforum_user_courses' user_id=view_user.pk %}">{% blocktrans %}View all courses{% endblocktrans %}</a>
+                  </td>
+                  <td width="33%">
                     <a href="{% url 'lbforum_user_topics' user_id=view_user.pk %}">{% blocktrans %}View all topics{% endblocktrans %}</a>
                   </td>
                   <td width="33%">
                     <a href="{% url 'lbforum_user_posts' user_id=view_user.pk %}">{% blocktrans %}View all posts{% endblocktrans %}</a>
-                  </td>
-                  <td width="33%">
-                    <p> {% blocktrans %}test{% endblocktrans %} </p>
                   </td>
                 </tr>
               </tbody>
