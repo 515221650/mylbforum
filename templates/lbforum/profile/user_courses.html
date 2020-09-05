@@ -19,8 +19,6 @@
       <div class = "cell">
         <span class = "course_header" style="color:grey">{% blocktrans %}liked courses {% endblocktrans %}</span>
       </div>
-        <br> 
-        <br>
         {% if course.1 %}
           <a class = "item_node" style="background-color:yellow" href="{{ course.get_absolute_url }}">
             <span>{{ course.0.name }} </span>
