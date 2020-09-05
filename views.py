@@ -277,23 +277,29 @@ def new_post(
 def new_chat_post2(
         request, user_id=None, form_class=NewPostForm,
         template_name='lbforum/post.html'):
-    print("kkkk")
     return new_chat_post(request,user_id=user_id)
 @login_required
 def new_chat_post3(
         request, topic_id=None, form_class=NewPostForm,
         template_name='lbforum/post.html'):
-    print("gggg")
     return new_chat_post(request, topic_id=topic_id)
 
 def new_chat_post(
         request, user_id=None, forum_id=None, topic_id=None, form_class=NewPostForm,
         template_name='lbforum/post.html'):
-    print(topic_id)
-    print(user_id)
-    print(forum_id)
-    print("ASDASDASDDDDDDD")
+
     user = request.user
+
+    if user_id:
+        profile = LBForumUserProfile.objects.get(id=user.id)
+        chat_list = profile.get_chat_list()
+        print(chat_list)
+        print(user_id)
+        print(type(user_id))
+        if user_id in chat_list.keys():
+            return HttpResponseRedirect(reverse("lbforum_chat",
+                                         args=[chat_list[user_id]]))
+
     if not user.lbforum_profile.nickname:
         return redirect('lbforum_change_profile')
     qpost = topic = forum = first_post = preview = None
