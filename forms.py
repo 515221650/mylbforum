@@ -153,12 +153,12 @@ class NewPostForm(PostForm):
         self.x = x
         self.y = y
 
-    def save(self):
+    def save(self, tag = None):
         topic_post = False
         if not self.topic:
-            topic_type = self.cleaned_data['topic_type']
+            topic_type = tag
             if topic_type:
-                topic_type = TopicType.objects.get(id=topic_type)
+                topic_type = TopicType.objects.get(name=topic_type)
             else:
                 topic_type = None
             topic = Topic(forum=self.forum,
@@ -168,7 +168,7 @@ class NewPostForm(PostForm):
                           need_reply_attachments=self.cleaned_data['need_reply_attachments'],
                           topic_type=topic_type,
                           owns1=self.x,
-                          owns2=self.y
+                          owns2=self.y,
                           )
             topic_post = True
             topic.save()

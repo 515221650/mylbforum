@@ -889,6 +889,24 @@ a.node:hover {
 	color: #777;
 }
 
+a.node2:link, a.node2:visited, a.node2:active {
+	background-color: #08ab04;
+	font-size: 11px;
+	line-height: 10px;
+	display: inline-block;
+	padding: 4px 4px 3px 4px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	text-decoration: none;
+	color: #f8ffff;
+}
+
+a.node2:hover {
+	text-decoration: none;
+	background-color: #e2e2e2;
+	color: #777;
+}
+
 a.op:link, a.op:visited, a.op:active {
 	background-color: #dde;
 	font-size: 11px;

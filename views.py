@@ -237,6 +237,7 @@ def new_post(
             return HttpResponse(_("you can't reply, this topic closed."))
         forum = topic.forum
         first_post = topic.posts.order_by('created_on').first()
+    tag = "test"
     initial['forum'] = forum
     if request.method == "POST":
         form = form_class(
@@ -245,7 +246,7 @@ def new_post(
             topic=topic, ip=get_client_ip(request))
         preview = request.POST.get('preview', '')
         if form.is_valid() and request.POST.get('submit', ''):
-            post = form.save()
+            post = form.save(tag)
             forum = post.topic.forum
             if topic:
                 return HttpResponseRedirect(post.get_absolute_url_ext())

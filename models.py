@@ -148,7 +148,7 @@ LEVEL_CHOICES = (
 class Topic(models.Model):
     forum = models.ForeignKey(Forum, verbose_name=_('Forum'))
     topic_type = models.ForeignKey(
-        TopicType, verbose_name=_('Topic Type'),
+        TopicType, verbose_name=_('TopicType'),
         blank=True, null=True)
     posted_by = models.ForeignKey(settings.AUTH_USER_MODEL)
 
