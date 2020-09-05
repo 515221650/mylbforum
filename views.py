@@ -257,7 +257,7 @@ def new_post(
 
     print("!!!!!!")
     if request.method == "POST":
-        tag = request.POST["tag"]
+        tag = request.POST.get("tag")
         form = form_class(
             request.POST, user=user, forum=forum,
             initial=initial,
