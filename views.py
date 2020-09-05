@@ -117,7 +117,8 @@ def forum(
         'topic_type': topic_type, 'topic_type2': topic_type2,
         'friends_like': friends_like,
         'friends_taken': friends_taken,
-        'choose':choose
+        'choose':choose,
+        'slug': forum_slug
     }
     return render(request, template_name, ext_ctx)
 

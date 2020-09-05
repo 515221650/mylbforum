@@ -22,7 +22,7 @@
               <tbody>
                 <tr>
                   <td width="33%">
-                    {% trans "Courses" %}: <strong>{{ user_courses|length }}</strong>
+                    {% trans "Courses" %}: <strong>{{ courses_len }}</strong>
                   </td>
                   <td width="33%">
                     {% trans "Topics" %}: <strong>{{ view_user.topic_set.all.count }}</strong>
@@ -48,5 +48,11 @@
         </tr>
       </tbody>
     </table>
+    <a class = "item_node" href = "{% url 'lbforum_user_posts' user_id=view_user.pk %}">   
+      <span>add friend </span>
+    </a>
+    <a class = "item_node" href = "{% url 'lbforum_user_posts' user_id=view_user.pk %}">   
+      <span>chat </span>
+    </a>
   </div>
 </div>
