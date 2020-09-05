@@ -22,7 +22,7 @@
               <tbody>
                 <tr>
                   <td width="25%">
-                    {% trans "Courses" %}: <strong>{{ courses_len }}</strong>
+                    {% trans "Courses" %}: <strong>{{ courses | length }}</strong>
                   </td>
                   <td width="25%">
                     {% trans "Topics" %}: <strong>{{ view_user.topic_set.all.count }}</strong>
@@ -31,7 +31,7 @@
                     {% trans "Posts" %}: <strong>{{ view_user.post_set.all.count }}</strong>
                   </td>
                   <td width="25%">
-                    {% trans "Friends" %}: <strong>{{ my_friends | length }}</strong>
+                    {% trans "Friends" %}: <strong>{{ user_friends | length }}</strong>
                   </td>
                 </tr>
                 <tr>
