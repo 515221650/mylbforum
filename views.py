@@ -217,7 +217,7 @@ def markitup_preview(request, template_name="lbforum/markitup_preview.html"):
 def new_post(
         request, forum_id=None, topic_id=None, form_class=NewPostForm,
         template_name='lbforum/post.html'):
-
+    
     user = request.user
     if not user.lbforum_profile.nickname:
         return redirect('lbforum_change_profile')

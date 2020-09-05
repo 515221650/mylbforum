@@ -206,7 +206,6 @@ a.dark:hover {
 	text-align: right;
 	font-size: 14px;
 	color: #fff;
-	margin-top: 13px;
 	line-height: 14px;
 }
 
@@ -219,12 +218,16 @@ a.dark:hover {
 #Navigation ul li {
 	list-style: none;
 	float: left;
-	margin-top: 15px;
-	margin-right: 20px;
+	background-color: #1d8775;
+    padding: 33px;
+    width: 90px;
+    /* border-radius: 3px; */
+    text-align: center;
 }
 
 #Navigation ul li a {
 	color: #fff;
+	font-size: 20px;
 }
 
 #Wrapper {
@@ -492,9 +495,20 @@ td.avatar_mini {
 .super.button { 
     background-color: #b1c2bd; padding: 4px 15px 4px 15px; border: 1px solid rgba(0,0,0,.25); border-bottom-color: rgba(0,0,0,.35); -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; font-size: 12px; line-height: 12px; outline: none; color:#ffffff}
 
-.normal.button { background-color: #b1c2bd; color: #fff; text-shadow: 0px 1px 1px #fff; text-decoration: none; font-weight: bold; -moz-box-shadow: 0px 1px 2px rgba(66, 66, 77, 0.3); }
-.normal.button:hover { background-color: #fff; color: #fff; text-shadow: 0px 1px 1px #fff; text-decoration: none; text-decoration: none; font-weight: bold; cursor: pointer; -moz-box-shadow: 0px 1px 2px rgba(66, 66, 77, 0.2); }
-.normal.button:active { background-color: #e2e2e2; color: #fff; text-shadow: 0px 1px 1px #fff; text-decoration: none; text-decoration: none; font-weight: bold; cursor: pointer; -moz-box-shadow: 0px 1px 2px rgba(66, 66, 77, 0.2); }
+.search.button {
+	height: 25px;
+	width: 80px;
+	position: absolute;
+	background-color: #135340;
+	content: "\f002";
+    font-family: FontAwesome;
+    font-size: 16px;
+    color: #876715;
+}
+
+.normal.button { background-color: #1d8775; color: #fff; text-shadow: 0px 1px 1px #fff; text-decoration: none; font-weight: bold; -moz-box-shadow: 0px 1px 2px rgba(66, 66, 77, 0.3); }
+.normal.button:hover { background-color: #1d534a; color: #fff; text-shadow: 0px 1px 1px #fff; text-decoration: none; text-decoration: none; font-weight: bold; cursor: pointer; -moz-box-shadow: 0px 1px 2px rgba(66, 66, 77, 0.2); }
+.normal.button:active { background-color: #1d8775; color: #fff; text-shadow: 0px 1px 1px #fff; text-decoration: none; text-decoration: none; font-weight: bold; cursor: pointer; -moz-box-shadow: 0px 1px 2px rgba(66, 66, 77, 0.2); }
 
 .special.button { background-color: #ffcc00; color: #532b17; text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.6); text-decoration: none; font-weight: 600; -moz-box-shadow: 0px 1px 2px rgba(233, 175, 0, 0.6); border: 1px solid rgba(200, 150, 0, 0.8); }
 .special.button:hover { background-color: #ffdf00; color: #402112; text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.7); text-decoration: none; text-decoration: none; font-weight: 600; cursor: pointer; -moz-box-shadow: 0px 1px 2px rgba(233, 175, 0, 0.5); border: 1px solid rgba(200, 150, 0, 1); }
@@ -1072,13 +1086,15 @@ a.fade:hover {
 #TopMain #title {
     display: block;
     float: left;
-    margin-top: 25px;
+    margin-top: 20px;
     margin-left: 20px;
     margin-right: 30px;
 }
 #TopMain #title a, #TopMain #title a:link, #TopMain #title a:visited {
     color: #FFFFFF;
-    font-weight: bold;
+	font-weight: bold;
+	font-size: 25px;
+    font-family: initial;
 }
 #friend-links-box a{
     padding: 0 20px 5px 0;
