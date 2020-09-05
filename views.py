@@ -217,7 +217,7 @@ def markitup_preview(request, template_name="lbforum/markitup_preview.html"):
 def new_post(
         request, forum_id=None, topic_id=None, form_class=NewPostForm,
         template_name='lbforum/post.html'):
-
+    tags = TopicType.objects.all()
     user = request.user
     if not user.lbforum_profile.nickname:
         return redirect('lbforum_change_profile')
@@ -225,6 +225,8 @@ def new_post(
     post_type = _('topic')
     topic_post = True
     initial = {}
+
+    print("#######")
     if forum_id:
         forum = get_object_or_404(Forum, pk=forum_id)
     if topic_id:
@@ -239,6 +241,8 @@ def new_post(
         first_post = topic.posts.order_by('created_on').first()
     tag = "test"
     initial['forum'] = forum
+
+    print("!!!!!!")
     if request.method == "POST":
         form = form_class(
             request.POST, user=user, forum=forum,
@@ -260,6 +264,13 @@ def new_post(
             initial['message'] = "[quote=%s]%s[/quote]" % (
                 qpost.posted_by.lbforum_profile, qpost.message)
         form = form_class(initial=initial, forum=forum)
+
+    print("@@@@@@")
+    print(tags)
+    taglist = []
+    for i in tags:
+        if not(i.__str__() == "test"):
+            taglist.append(i.__str__())
     ext_ctx = {
         'forum': forum,
         'show_forum_field': topic_post,
@@ -267,7 +278,8 @@ def new_post(
         'topic': topic,
         'first_post': first_post,
         'post_type': post_type,
-        'preview': preview
+        'preview': preview,
+        'tags': taglist
     }
     ext_ctx['attachments'] = user.lbattachment_set.filter(
         pk__in=request.POST.getlist('attachments'))

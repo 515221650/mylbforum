@@ -12,28 +12,30 @@
 {% endblock %}
 
 {% block content_right_bar %}
-<div class="cell">
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
-<tbody>
-<tr>
-<td width="48" valign="top">
-<a href="{% url 'lbforum_profile' user_id=userobj.pk %}">
-<img width="48px" height="48px" src="{{ userobj.lbforum_profile.get_avatar_url }}" alt=""/>
-</a>
-</td>
-<td width="10" valign="top"></td>
-<td width="auto" align="left">
-<span class="bigger"><a href="{% url 'lbforum_profile' user_id=userobj.pk %}">{{ userobj.lbforum_profile }}</a></span>
-<div class="sep5"></div>
-<span class="fade"></span>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="inner">
-<span class="fade">{% trans "Joined on" %}: <strong>{{userobj.date_joined|date:"Y-m-d"}}</strong></span>
-</div>
+
+<div class="box">
+  <div class="cell">
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+      <tbody>
+        <tr>
+          <td width="48" valign="top">
+            <a href="{% url 'lbforum_profile' user_id=userobj.pk %}">
+              <img width="48px" height="48px" src="{{ userobj.lbforum_profile.get_avatar_url }}" alt=""/>
+            </a>
+          </td>
+          <td width="10" valign="top"></td>
+          <td width="auto" align="left">
+            <span class="bigger"><a href="{% url 'lbforum_profile' user_id=userobj.pk %}">{{ userobj.lbforum_profile }}</a></span>
+            <div class="sep5"></div>
+            <span class="fade"></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="inner">
+    <span class="fade">{% trans "Joined on" %}: <strong>{{userobj.date_joined|date:"Y-m-d"}}</strong></span>
+  </div>
 </div>
 {% endblock %}
 
@@ -45,7 +47,6 @@
 {% block content_content %}
   {% paginate posts %}
   {% get_pages %}
-  <div class="box">
 
   {% if not posts %}
     <div align="center" class="glass"><div class="inner"><span class="white">{% trans "No Reply" %}</span></div></div>
