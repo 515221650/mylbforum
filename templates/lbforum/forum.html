@@ -17,9 +17,13 @@
             <span class="fade">Lecture</span>
         </div>
        <div class="inner">
-           <a class="item_node" href=""><span>like</span></a>
-           <a class="item_node" href=""><span>taken</span></a>
-           <a class="item_node" href=""><span>not interested</span></a>
+            <form action= {% url 'lbforum_forum' slug %} method="post">
+                {% csrf_token %}
+                 <input type="hidden"  name="lecture" value={{forum}}>
+                <input type="submit" value="like" class="item_node {% if choose == 1 %}selected{% endif %}" name="stat">
+                <input type="submit" value="taken" class="item_node {% if choose == 2 %}selected{% endif %}" name="stat">
+                <input type="submit" value="not interested" class="item_node {% if choose == 0 %}selected{% endif %}" name="stat">
+            </form>
        </div>
    </div>
    <div class="sep20"></div>
@@ -56,26 +60,10 @@
   {% if forum.description %}
     <div class="box">
       <div class="cell">
-        <span class="fade">{% trans "Forum Description" %}</span>
+        <span class="fade">{% trans "Lecture Description" %}</span>
       </div>
       <div class="inner">
         {{forum.description|bbcode|safe}}
-      </div>
-    </div>
-    <div class="sep20"></div>
-  {% endif %}
-
-  {% if forum.admins.all.count %}
-    <div class="box">
-      <div class="cell">
-        <span class="fade">{% trans "Forum Admin" %}</span>
-      </div>
-      <div class="inner">
-        {% for o in forum.admins.all %}
-          <a class="item_node" href="{% url 'lbforum_profile' o.pk %}">
-            <span> {{ o.lbforum_profile }} </span>
-          </a>
-        {% endfor %}
       </div>
     </div>
     <div class="sep20"></div>
