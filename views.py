@@ -93,6 +93,7 @@ def recent(request, template_name="lbforum/recent.html"):
     return render(request, template_name, ctx)
 
 
+@login_required
 def forum(
         request, forum_slug, topic_type='', topic_type2='',
         template_name="lbforum/forum.html"):
@@ -167,6 +168,7 @@ def rating(request):
         theforum.do_star(int(request.POST.get('rate')))
     return forum(request, slug)
 
+@login_required
 def topic(request, topic_id, template_name="lbforum/topic.html"):
     user = request.user
     topic = get_object_or_404(Topic, pk=topic_id)
@@ -188,6 +190,7 @@ def topic(request, topic_id, template_name="lbforum/topic.html"):
     return render(request, template_name, ext_ctx)
 
 
+@login_required
 def chat(request, topic_id, template_name="lbforum/chat.html"):
     # print(topic_id)
     # print("THISISTOPIC")
@@ -313,6 +316,7 @@ def new_chat_post3(
         template_name='lbforum/post.html'):
     return new_chat_post(request, topic_id=topic_id)
 
+@login_required
 def new_chat_post(
         request, user_id=None, forum_id=None, topic_id=None, form_class=NewPostForm,
         template_name='lbforum/post.html'):
