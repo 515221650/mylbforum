@@ -8,14 +8,24 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from .forms import ProfileForm
+from .models import LBForumUserProfile, Forum
 
+def get_class_by_user(user):
+    user_id = user.id
+    profile = LBForumUserProfile.objects.get(id=user_id)
+    return profile.get_class()
+
+def get_class_by_id(course):
+    return Forum.objects.get(id=course)
 
 def profile(request, user_id=None, template_name="lbforum/profile/profile.html"):
     view_user = request.user
     if user_id:
         view_user = get_object_or_404(User, pk=user_id)
     view_only = view_user != request.user
-    ext_ctx = {'view_user': view_user, 'view_only': view_only}
+    courses = get_class_by_user(view_user)
+    courses = [1,2]
+    ext_ctx = {'view_user': view_user, 'view_only': view_only, 'user_courses': courses}
     return render(request, template_name, ext_ctx)
 
 

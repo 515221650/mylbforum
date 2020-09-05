@@ -265,7 +265,7 @@ class LBForumUserProfile(models.Model):
     nickname = models.CharField(
         _("Nickname"), max_length=255, blank=False, default='')
     avatar = ThumbnailerImageField(_("Avatar"), upload_to='imgs/avatars', blank=True, null=True)
-    classes = models.CharField(max_length=10000, default="[]")
+    classes = models.CharField(max_length=10000, default="[1,2,3]")
     k = get_people_example()
     friends = models.CharField(max_length=10000, default=k)
     bio = models.TextField(blank=True)
