@@ -28,26 +28,6 @@
             <span>{{ course.0.name }} </span>
           </a>
         {% endif %}
-          
-        <!-- <table width="100%" cellspacing="0" cellpadding="0" border="0">
-            <caption>
-              <span style="color:grey">{% blocktrans %}liked courses : {% endblocktrans %}</span>
-            </caption>
-              <tbody >
-            <tr>
-              {% if course.1 %}
-            <td width="auto" valign="top" style="background-color:yellow">
-              {% else %}
-              <td width="auto" valign="top" >
-              {% endif %}
-                
-                <strong>
-                  <a href="{{ course.get_absolute_url }}">{{ course.0.name }}</a>
-                </strong>
-              </td>
-            </tr>
-          </tbody>
-        </table> -->
     {% endfor %}
     <br> 
     <br>
@@ -64,25 +44,10 @@
           <span>{{ course.0.name }} </span>
         </a>
       {% endif %}
-        <!-- <table width="100%" cellspacing="0" cellpadding="0" border="0">
-          <tbody>
-            <tr>
-              {% if course.1 %}
-              <td width="auto" valign="top" style="background-color:yellow">
-              {% else %}
-              <td width="auto" valign="top" >
-              {% endif %}
-                <strong>
-                  <a href="{{ course.get_absolute_url }}">{{ course.0.name }}</a>
-                </strong>
-              </td>
-            </tr>
-          </tbody>
-        </table> -->
   {% endfor %}
 
     <div class="inner">
-      {% show_pages %}
+     <!-- {% show_pages %} -->
     </div>
   </div>
 {% endblock %}
