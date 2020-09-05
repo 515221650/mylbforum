@@ -43,6 +43,8 @@ profile_patterns = [
         name='lbforum_user_topics'),
     url('^(?P<user_id>\d+)/posts/$', profileviews.user_posts,
         name='lbforum_user_posts'),
+    url('^(?P<user_id>\d+)/courses/$', profileviews.user_courses,
+        name='lbforum_user_courses'),        
     url(r'^change/$', profileviews.change_profile,
         name='lbforum_change_profile'),
 ]
