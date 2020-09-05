@@ -169,6 +169,9 @@ class Topic(models.Model):
     hidden = models.BooleanField(default=False)
     level = models.SmallIntegerField(choices=LEVEL_CHOICES, default=30)
 
+    owns1 = models.IntegerField(default=-1)
+    owns2 = models.IntegerField(default=-1)
+
     class Meta:
         ordering = ('-last_reply_on',)  # '-sticky'
         get_latest_by = ('created_on')
@@ -282,7 +285,11 @@ class LBForumUserProfile(models.Model):
     my_like_classes = models.CharField(max_length=2000, default="[]")
     my_taken_classes = models.CharField(max_length=2000, default="[]")
     friends = models.CharField(max_length=2000, default='[]')
+
+    chatList = models.CharField(max_length=2000, default='[]')
+
     bio = models.TextField(blank=True)
+
 
     def __str__(self):
         return self.nickname or self.user.username
@@ -305,6 +312,11 @@ class LBForumUserProfile(models.Model):
         self.set_class(taken_classes, 2)
         return old
 
+    def add_friend(self, user_id):
+        friends = self.get_friend()
+        if user_id not in friends:
+            friends.append(user_id)
+
     def get_like_classes(self):
         return json.loads(self.my_like_classes)
 
@@ -322,6 +334,9 @@ class LBForumUserProfile(models.Model):
         else:
             self.my_taken_classes = json.dumps(x)
         self.save()
+
+    def get_chat_list(self):
+        return json.loads(self.chatList)
 
     def get_friend(self):
         return json.loads(self.friends)
