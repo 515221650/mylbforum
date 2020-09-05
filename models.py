@@ -278,7 +278,7 @@ class Post(models.Model):
         topic = self.topic
         post_idx = topic.posts.filter(created_on__lte=self.created_on).count()
         page = (post_idx - 1) / elp_setttings.PER_PAGE + 1
-        return '%s?page=%s#p%s' % (topic.get_absolute_url(), page, self.pk)
+        return '%s?page=%s#p%s' % (topic.get_absolute_url().replace("topic","chat"), page, self.pk)
 
 
 @python_2_unicode_compatible
@@ -294,7 +294,7 @@ class LBForumUserProfile(models.Model):
     my_taken_classes = models.CharField(max_length=2000, default="[]")
     friends = models.CharField(max_length=2000, default='[]')
 
-    chatList = models.CharField(max_length=2000, default='[]')
+    chatList = models.CharField(max_length=2000, default='{}')
 
     bio = models.TextField(blank=True)
 

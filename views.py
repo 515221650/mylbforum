@@ -17,8 +17,7 @@ from lbutils import get_client_ip
 
 from .templatetags.lbforum_filters import topic_can_post
 from .forms import EditPostForm, NewPostForm, ForumForm
-from .models import Topic, Forum, Post, LBForumUserProfile
-
+from .models import Topic, Forum, Post, LBForumUserProfile, TopicType
 
 User = get_user_model()
 
@@ -137,7 +136,7 @@ def forum(
 def rating(request):
     slug = request.get('slug')
     if request.get('rate') is not None:
-        forum = get_object_or_404(Forum, slug=forum_slug)
+        # forum = get_object_or_404(Forum, slug=forum_slug)
         forum.do_star(int(request.get('rate')))
     return forum(request, slug)
 
@@ -162,9 +161,11 @@ def topic(request, topic_id, template_name="lbforum/topic.html"):
     return render(request, template_name, ext_ctx)
 
 
-def chat(request, user_id, chat_id, template_name="lbforum/topic.html"):
+def chat(request, topic_id, template_name="lbforum/chat.html"):
+    # print(topic_id)
+    # print("THISISTOPIC")
     user = request.user
-    topic = get_object_or_404(Topic, pk=chat_id)
+    topic = get_object_or_404(Topic, pk=topic_id)
     if topic.hidden and not topic.forum.is_admin(user):
         return HttpResponse(ugettext('no right'))
     topic.num_views += 1
@@ -172,6 +173,7 @@ def chat(request, user_id, chat_id, template_name="lbforum/topic.html"):
     obj = topic.owns1
     if topic.owns1 == user.id:
         obj = topic.owns2
+    obj = User.objects.get(id=obj)
     posts = get_all_posts(user)
     posts = posts.filter(topic=topic)
     posts = posts.filter(topic_post=False)
@@ -201,6 +203,7 @@ def markitup_preview(request, template_name="lbforum/markitup_preview.html"):
 def new_post(
         request, forum_id=None, topic_id=None, form_class=NewPostForm,
         template_name='lbforum/post.html'):
+
     user = request.user
     if not user.lbforum_profile.nickname:
         return redirect('lbforum_change_profile')
@@ -211,6 +214,8 @@ def new_post(
     if forum_id:
         forum = get_object_or_404(Forum, pk=forum_id)
     if topic_id:
+        print(topic_id)
+        print("ASDASD")
         post_type = _('reply')
         topic_post = False
         topic = get_object_or_404(Topic, pk=topic_id)
@@ -240,7 +245,6 @@ def new_post(
             initial['message'] = "[quote=%s]%s[/quote]" % (
                 qpost.posted_by.lbforum_profile, qpost.message)
         form = form_class(initial=initial, forum=forum)
-
     obj = topic.owns1
     if topic.owns1 == user.id:
         obj = topic.owns2
@@ -262,10 +266,25 @@ def new_post(
 
 
 @login_required
-def new_chat_post(
-        request, user_id, forum_id=None, topic_id=None, form_class=NewPostForm,
+def new_chat_post2(
+        request, user_id=None, form_class=NewPostForm,
         template_name='lbforum/post.html'):
-    post = ""
+    print("kkkk")
+    return new_chat_post(request,user_id=user_id)
+@login_required
+def new_chat_post3(
+        request, topic_id=None, form_class=NewPostForm,
+        template_name='lbforum/post.html'):
+    print("gggg")
+    return new_chat_post(request, topic_id=topic_id)
+
+def new_chat_post(
+        request, user_id=None, forum_id=None, topic_id=None, form_class=NewPostForm,
+        template_name='lbforum/post.html'):
+    print(topic_id)
+    print(user_id)
+    print(forum_id)
+    print("ASDASDASDDDDDDD")
     user = request.user
     if not user.lbforum_profile.nickname:
         return redirect('lbforum_change_profile')
@@ -273,9 +292,12 @@ def new_chat_post(
     post_type = _('topic')
     topic_post = True
     initial = {}
+    forum = Forum.objects.get(id=1)
     if forum_id:
         forum = get_object_or_404(Forum, pk=forum_id)
     if topic_id:
+        print(topic_id)
+        print("ASDASD")
         post_type = _('reply')
         topic_post = False
         topic = get_object_or_404(Topic, pk=topic_id)
@@ -290,6 +312,10 @@ def new_chat_post(
             initial=initial,
             topic=topic, ip=get_client_ip(request))
         preview = request.POST.get('preview', '')
+        print(form.is_bound)
+        print(form.errors)
+        print(form.is_valid())
+        print("asdasd")
         if form.is_valid() and request.POST.get('submit', ''):
             post = form.save()
             forum = post.topic.forum
@@ -299,14 +325,33 @@ def new_chat_post(
                 return HttpResponseRedirect(reverse("lbforum_forum",
                                                     args=[forum.slug]))
     else:
-        form = form_class(
-            request.POST, user=user, forum=forum,
-            initial=initial,
-            topic=topic, ip=get_client_ip(request))
-        form.set_chat(user.id, user_id)
-        if form.is_valid():
-            post = form.save()
-    return HttpResponseRedirect(post.get_absolute_url_ext())
+        topic = Topic(forum=forum,
+                      posted_by=user,
+                      subject="chat",
+                      need_replay=False,
+                      need_reply_attachments=False,
+                      topic_type=TopicType.objects.get(name="test"),
+                      owns1=user_id,
+                      owns2=user.id
+                      )
+        topic_post = True
+        topic.save()
+        profile1 = LBForumUserProfile.objects.get(id=user.id)
+        profile2 = LBForumUserProfile.objects.get(id=user_id)
+        profile1.add_chat(user_id, topic.id)
+        profile2.add_chat(user.id, topic.id)
+        posts = get_all_posts(user)
+        posts = posts.filter(topic=topic)
+        posts = posts.filter(topic_post=False)
+        posts = posts.order_by('created_on')
+        ext_ctx = {
+            'request': request,
+            'topic': topic,
+            'posts': posts,
+            'has_replied': topic.has_replied(request.user),
+            'can_admin': topic.forum.is_admin(user)
+        }
+        return HttpResponseRedirect(reverse("lbforum_chat", args=[topic.id]))
 
 
 

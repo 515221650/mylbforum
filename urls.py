@@ -70,14 +70,15 @@ urlpatterns = [
     url(r'^profile/', include(profile_patterns)),
     url(r'^api/', include(router.urls)),
     url(r'^chat/', include(chat_patterns)),
-
     url(r'rating/', views.rating, name='rating'),
 
-    url('^reply/new/(?P<topic_id>\d+)/$', views.new_chat_post,
-        name='lbforum_new_replay'),
+    # url('^reply/new/(?P<topic_id>\d+)/$', views.new_chat_post,
+    #     name='lbforum_new_replay'),
 
-    url('^new_chat/(?P<user_id>\d+)', views.new_chat_post,
+    url('^new_chat/(?P<user_id>\d+)/$', views.new_chat_post2,
         name='new_chat'),
+    url('^new_chat2/(?P<topic_id>\d+)/$', views.new_chat_post3,
+        name='new_chat2'),
 
     url('^reply/new/(?P<topic_id>\d+)/$', views.new_post,
         name='lbforum_new_replay'),
